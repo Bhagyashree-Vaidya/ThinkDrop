@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>ThinkDrop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Manrope:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    button { font: inherit; border: none; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+    input, textarea { font: inherit; }
+    ::selection { background: #C24914; color: #F2EAD8; }
+
+    /* ─── Variables ─── */
+    :root {
+      --blush:       #F2D1D8;
+      --rose:        #D96C8E;
+      --ember:       #C24914;
+      --ember-hi:    #E8742E;
+      --wine:        #A62A52;
+      --wine-deep:   #4A1A2D;
+      --ink:         #1A0B12;
+      --bg:          #0F0709;
+      --surface:     #1F0E16;
+      --surface-2:   #2C1521;
+      --surface-3:   #3A1B2B;
+      --cream:       #F2EAD8;
+      --cream-soft:  rgba(242,234,216,0.78);
+      --cream-faint: rgba(242,234,216,0.45);
+      --rule:        rgba(217,108,142,0.18);
+    }
+
+    /* ─── Base ─── */
+    html, body {
+      height: 100%;
+      background: #0F0709;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Paper grain texture */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0 0.7 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      mix-blend-mode: screen; opacity: 0.5;
+    }
+    /* Ambient radial glows behind the app frame */
+    body::after {
+      content: "";
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 40% at 30% 20%, rgba(166,42,82,0.18), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 70%, rgba(194,73,20,0.10), transparent 60%);
+    }
+
+    /* ─── App frame ─── */
+    #app {
+      width: 390px;
+      height: 844px;
+      max-width: 100vw;
+      max-height: 100dvh;
+      background: var(--bg);
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      border-radius: 50px;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.85), 0 0 0 1px #2C1521;
+    }
+    @media (max-width: 420px) {
+      #app { border-radius: 0; height: 100dvh; width: 100vw; }
+      body { align-items: flex-start; }
+    }
+
+    /* ─── Screen ─── */
+    .screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--cream);
+    }
+
+    /* ─── Status bar spacer ─── */
+    .sbar { height: 54px; flex-shrink: 0; }
+
+    /* ─── Typography ─── */
+    .lbl {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cream-faint);
+    }
+    .lbl-rose { color: var(--rose); }
+
+    .entry-no {
+      font-family: 'JetBrains Mono', ui-monospace, monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--rose);
+    }
+
+    .fraunces {
+      font-family: 'Fraunces', Georgia, serif;
+      font-variation-settings: 'opsz' 144, 'SOFT' 100;
+      font-weight: 400;
+    }
+
+    /* ─── Top bar ─── */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px 14px;
+      flex-shrink: 0;
+    }
+    .topbar-entries {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px 6px 6px;
+      border-radius: 10px;
+    }
+    .topbar-icon {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: var(--surface-3);
+      border: 1px solid var(--rule);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .topbar-streak {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--surface-2);
+      border: 1px solid var(--wine-deep);
+      border-radius: 999px;
+      padding: 6px 14px 6px 8px;
+      box-shadow: inset 0 0 0 1px rgba(194,73,20,0.15);
+    }
+    .topbar-streak-num {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ember-hi);
+      font-variation-settings: 'opsz' 144;
+      line-height: 1;
+    }
+
+    /* ─── Chapter pill ─── */
+    .chapter-pill {
+      margin: 0 16px 14px;
+      display: flex; align-items: center; gap: 12px;
+      background: linear-gradient(180deg, var(--wine) 0%, #8E1F44 100%);
+      border-radius: 16px;
+      padding: 12px 14px 12px 18px;
+      border: 1px solid var(--rose);
+      box-shadow: 0 0 0 1px var(--wine-deep), 0 8px 24px -8px var(--wine);
+      flex-shrink: 0;
+    }
+    .chapter-pill-text { flex: 1; min-width: 0; }
+    .chapter-pill-title {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--cream);
+      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+      margin-top: 2px;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .chapter-pill-edit {
+      width: 34px; height: 34px;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--rose);
+      color: var(--blush);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ─── Bottom nav ─── */
+    .bottom-nav {
+      position: absolute;
+      bottom: 28px; left: 16px; right: 16px;
+      background: var(--surface-2);
+      border: 1px solid var(--wine-deep);
+      border-radius: 22px;
+      padding: 8px;
+      display: flex; align-items: center; justify-content: space-around;
+      box-shadow: 0 12px 40px -8px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(217,108,142,0.06);
+      z-index: 5;
+    }
+    .nav-btn {
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      color: var(--cream-faint);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 140ms;
+    }
+    .nav-btn-active { background: var(--surface-3); color: var(--cream); }
+    .nav-btn-add {
+      width: 56px; height: 56px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, var(--ember-hi), var(--ember));
+      border: 1px solid var(--ember-hi);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18), 0 8px 20px -4px rgba(194,73,20,0.5);
+    }
+
+    /* ─── Path screen ─── */
+    .path-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 140px;
+    }
+    .path-canvas {
+      position: relative;
+      margin: 0 16px;
+    }
+    .path-node-wrap {
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+    .path-dot {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+    }
+    .path-node-tip {
+      position: absolute;
+      left: 50%; top: -44px;
+      transform: translateX(-50%);
+      background: var(--cream); color: var(--ink);
+      padding: 5px 12px;
+      border-radius: 10px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700; font-size: 11px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      box-shadow: 0 3px 0 #C5B89A;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .path-node-tip::after {
+      content: '';
+      position: absolute;
+      left: 50%; bottom: -5px;
+      transform: translateX(-50%) rotate(45deg);
+      width: 8px; height: 8px;
+      background: var(--cream);
+    }
+    .path-divider {
+      position: absolute;
+      left: 0; right: 0;
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 8px;
+    }
+    .path-divider-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(217,108,142,0.25), transparent);
+    }
+
+    /* ─── Add screen ─── */
+    .add-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 16px 18px;
+      flex-shrink: 0;
+    }
+    .add-close {
+      width: 36px; height: 36px;
+      border-radius: 12px;
+      background: var(--surface-2);
+      border: 1px solid var(--wine-deep);
+      color: var(--cream-soft);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .add-progress { flex: 1; margin: 0 14px; display: flex; gap: 6px; }
+    .prog-bar { flex: 1; height: 8px; border-radius: 6px; }
+    .prog-on  { background: linear-gradient(90deg, var(--ember-hi), var(--ember)); border: 1px solid var(--ember); }
+    .prog-off { background: var(--surface-3); border: 1px solid var(--wine-deep); }
+    .add-body { flex: 1; padding: 8px 22px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+    .add-footer { padding: 12px 16px 28px; flex-shrink: 0; }
+    .add-btn {
+      width: 100%; height: 56px; border-radius: 16px;
+      font-family: 'Manrope', sans-serif;
+      font-weight: 700; font-size: 15px;
+      letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .add-btn-on {
+      background: linear-gradient(180deg, var(--ember-hi), var(--ember));
+      border: 1px solid var(--ember-hi); color: #fff;
+      box-shadow: 0 4px 0 #6E2A0E;
+    }
+    .add-btn-off {
+      background: var(--surface-3);
+      border: 1px solid var(--wine-deep);
+      color: var(--cream-faint);
+      cursor: not-allowed;
+    }
+    .add-field {
+      background: var(--surface);
+      border: 1px solid var(--wine-deep);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+    #word-input {
+      width: 100%; background: transparent; border: none; outline: none;
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'SOFT' 100;
+      font-size: 32px; font-weight: 400; color: var(--cream);
+      margin-top: 6px; padding: 0;
+    }
+    #word-input::placeholder { color: var(--cream-faint); opacity: 1; }
+    .pos-chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+    .pos-chip {
+      padding: 7px 14px; border-radius: 999px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; letter-spacing: 0.06em;
+      transition: background 120ms, border-color 120ms, color 120ms;
+    }
+    .pos-chip-on  { background: var(--wine); border: 1px solid var(--rose);      color: var(--cream); }
+    .pos-chip-off { background: transparent;  border: 1px solid var(--wine-deep); color: var(--cream-faint); }
+    .nudge-card {
+      background: var(--surface);
+      border: 1px dashed rgba(217,108,142,0.33);
+      border-radius: 14px;
+      padding: 10px 14px; margin-bottom: 18px;
+    }
+    .nudge-text {
+      font-family: 'Fraunces', serif;
+      font-size: 14px; color: var(--cream-soft);
+      font-style: italic; margin-top: 4px;
+    }
+    #meaning-input {
+      width: 100%; background: var(--surface);
+      border: 1px solid var(--wine-deep);
+      border-radius: 14px;
+      padding: 14px 16px;
+      font-family: 'Fraunces', serif;
+      font-size: 16px; line-height: 1.5;
+      color: var(--cream); outline: none; resize: none;
+    }
+    #meaning-input::placeholder { color: var(--cream-faint); opacity: 1; }
+    .preview-card {
+      margin-top: 12px;
+      background: var(--surface);
+      border: 1px solid var(--wine-deep);
+      border-radius: 16px; padding: 20px 18px;
+    }
+    .preview-word {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'SOFT' 100;
+      font-size: 36px; line-height: 1.05; color: var(--cream);
+      margin: 4px 0;
+    }
+    .preview-pos {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--cream-faint);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .rule { height: 1px; background: var(--rule); margin: 6px 0 14px; }
+    .preview-meaning {
+      font-family: 'Fraunces', serif;
+      font-size: 15px; line-height: 1.55;
+      color: var(--cream-soft); margin: 0;
+    }
+
+    /* ─── Reveal screen ─── */
+    .reveal-bloom {
+      position: absolute;
+      top: -100px; left: 50%; transform: translateX(-50%);
+      width: 500px; height: 500px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(194,73,20,0.22) 0%, transparent 60%);
+      filter: blur(20px);
+      pointer-events: none;
+    }
+    .reveal-body {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 20px 24px;
+      position: relative; z-index: 1; text-align: center;
+    }
+    .reveal-card {
+      width: 100%; max-width: 320px;
+      background: var(--surface);
+      border: 1px solid rgba(217,108,142,0.22);
+      border-radius: 18px; padding: 18px 20px;
+      text-align: left;
+      box-shadow: 0 0 40px -10px rgba(194,73,20,0.22);
+      margin-top: 16px;
+    }
+    .reveal-badge {
+      margin-top: 20px;
+      background: var(--surface-2);
+      border: 1px solid var(--wine-deep);
+      border-radius: 14px; padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    /* ─── Profile screen ─── */
+    .profile-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 16px 14px;
+      flex-shrink: 0;
+    }
+    .profile-back {
+      width: 36px; height: 36px; border-radius: 12px;
+      background: var(--surface-2); border: 1px solid var(--wine-deep);
+      color: var(--cream-soft);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .profile-title {
+      font-family: 'Fraunces', serif;
+      font-size: 17px; font-weight: 500; color: var(--cream);
+    }
+    .profile-body {
+      flex: 1; overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 16px 130px;
+    }
+    .profile-identity { display: flex; align-items: center; gap: 14px; padding: 4px 4px 18px; }
+    .profile-avatar {
+      width: 64px; height: 64px; border-radius: 18px;
+      background: linear-gradient(135deg, var(--wine), var(--wine-deep));
+      border: 1px solid var(--rose);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .profile-name {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+      font-size: 22px; color: var(--cream); line-height: 1.1;
+    }
+    .streak-card {
+      background: var(--surface);
+      border: 1px solid var(--wine-deep);
+      border-radius: 18px; padding: 18px 18px 16px;
+    }
+    .streak-card-top {
+      display: flex; justify-content: space-between;
+      align-items: baseline; margin-bottom: 14px;
+    }
+    .streak-count {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144;
+      font-size: 30px; color: var(--cream); line-height: 1; margin-top: 6px;
+    }
+    .streak-count em { color: var(--ember); font-style: italic; font-size: 18px; }
+    .streak-grid {
+      display: grid;
+      grid-template-columns: repeat(15, 1fr);
+      gap: 4px;
+    }
+    .streak-cell { aspect-ratio: 1; border-radius: 4px; }
+    .streak-foot { display: flex; justify-content: space-between; margin-top: 10px; }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
+    .stat-tile {
+      background: var(--surface); border: 1px solid var(--wine-deep);
+      border-radius: 14px; padding: 14px;
+    }
+    .stat-val {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+      font-size: 26px; color: var(--cream); line-height: 1.1; margin-top: 4px;
+    }
+    .on-this-day {
+      margin-top: 18px;
+      background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+      border: 1px solid rgba(217,108,142,0.22);
+      border-radius: 18px; padding: 18px 20px;
+      position: relative; overflow: hidden;
+    }
+    .otd-glow {
+      position: absolute; top: -20px; right: -20px;
+      width: 120px; height: 120px; border-radius: 999px;
+      background: radial-gradient(circle, rgba(194,73,20,0.18), transparent 70%);
+      pointer-events: none;
+    }
+    .otd-word {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'SOFT' 100;
+      font-size: 30px; color: var(--cream); line-height: 1.05;
+    }
+    .otd-meaning {
+      font-family: 'Fraunces', serif;
+      font-size: 14px; line-height: 1.5;
+      color: var(--cream-soft); margin: 8px 0 0;
+    }
+    .recent-head {
+      margin-top: 22px; margin-bottom: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .recent-head-title { font-family: 'Fraunces', serif; font-size: 15px; color: var(--cream); }
+    .entry-row {
+      display: block; width: 100%; text-align: left;
+      background: transparent; border: none;
+      padding: 14px 4px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .entry-row-word {
+      font-family: 'Fraunces', serif;
+      font-variation-settings: 'opsz' 144, 'SOFT' 100;
+      font-size: 22px; color: var(--cream);
+    }
+    .entry-row-pos {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; color: var(--cream-faint);
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .entry-row-meaning {
+      font-family: 'Fraunces', serif;
+      font-size: 13px; line-height: 1.45;
+      color: var(--cream-soft); margin: 4px 0 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ─── Animations ─── */
+    @keyframes flicker {
+      0%,100% { transform: scaleY(1)    scaleX(1); }
+      25%     { transform: scaleY(1.06) scaleX(0.97); }
+      50%     { transform: scaleY(0.96) scaleX(1.04); }
+      75%     { transform: scaleY(1.03) scaleX(0.99); }
+    }
+    .flame-anim { transform-origin: 50% 90%; animation: flicker 2.4s ease-in-out infinite; display: block; }
+
+    @keyframes hop {
+      0%, 100% { transform: translateY(0); }
+      40%       { transform: translateY(-14px); }
+      55%       { transform: translateY(-8px); }
+    }
+    .bunny-hop-anim { animation: hop 1.2s ease-in-out infinite; display: block; }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 0; height: 0; }
+  </style>
+</head>
+<body>
+
+<!-- Shared SVG gradient defs (referenced by all inline SVGs) -->
+<svg style="display:none;position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="flameGrad" cx="50%" cy="70%" r="50%">
+      <stop offset="0%"   stop-color="#FFE6A8"/>
+      <stop offset="35%"  stop-color="#E8742E"/>
+      <stop offset="100%" stop-color="#C24914"/>
+    </radialGradient>
+    <radialGradient id="bBody" cx="50%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#fff5e8"/>
+      <stop offset="60%"  stop-color="#F2EAD8"/>
+      <stop offset="100%" stop-color="#d8c8a8"/>
+    </radialGradient>
+    <radialGradient id="bBelly" cx="50%" cy="50%" r="60%">
+      <stop offset="0%"   stop-color="#fffaf0"/>
+      <stop offset="100%" stop-color="#ead9b8"/>
+    </radialGradient>
+    <radialGradient id="bEar" cx="50%" cy="60%" r="60%">
+      <stop offset="0%"   stop-color="#e8a8b8"/>
+      <stop offset="100%" stop-color="#a62a52"/>
+    </radialGradient>
+    <radialGradient id="bCheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#e8a8b8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#e8a8b8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<div id="app"></div>
+
+<script>
+/* ─── Store ─── */
+const KEY = 'thinkdrop.v1';
+const Store = {
+  get(fb) {
+    try {
+      if (window.storage) { const v = window.storage.getItem(KEY); return v ? JSON.parse(v) : fb; }
+      const v = localStorage.getItem(KEY); return v ? JSON.parse(v) : fb;
+    } catch { return fb; }
+  },
+  set(val) {
+    try {
+      const s = JSON.stringify(val);
+      if (window.storage) window.storage.setItem(KEY, s);
+      else localStorage.setItem(KEY, s);
+    } catch {}
+  }
+};
+
+/* ─── Escape ─── */
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+/* ─── Date helpers ─── */
+function today() { return new Date().toISOString().slice(0, 10); }
+function daysAgo(n) { const d = new Date(); d.setDate(d.getDate() - n); return d.toISOString().slice(0, 10); }
+const WEEKDAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function dayLabel(dk) {
+  const t = today(), y = daysAgo(1);
+  if (dk === t) return 'Today';
+  if (dk === y) return 'Yesterday';
+  return WEEKDAYS[new Date(dk + 'T12:00:00').getDay()];
+}
+
+/* ─── Seeds ─── */
+const SEED_ENTRIES = [
+  { id:'s23', n:23, word:'petrichor',  pos:'n.', meaning:'The earthy smell after rain. First noticed on a porch in August.',                         dayKey:today()     },
+  { id:'s22', n:22, word:'sonder',     pos:'n.', meaning:'The realisation that every passerby lives a life as vivid and complex as your own.',        dayKey:daysAgo(1)  },
+  { id:'s21', n:21, word:'apricity',   pos:'n.', meaning:'The warmth of the sun in winter. Worth the wait.',                                          dayKey:daysAgo(2)  },
+  { id:'s20', n:20, word:'hiraeth',    pos:'n.', meaning:'A homesickness for a home you cannot return to, or that never was.',                        dayKey:daysAgo(3)  },
+  { id:'s19', n:19, word:'meander',    pos:'v.', meaning:'To wander without urgency. The opposite of doomscrolling.',                                  dayKey:daysAgo(4)  },
+  { id:'s18', n:18, word:'limerence',  pos:'n.', meaning:'That involuntary, almost embarrassing romantic obsession. Tennov, 1979.',                   dayKey:daysAgo(5)  },
+  { id:'s17', n:17, word:'kintsugi',   pos:'n.', meaning:'Mending broken pottery with gold. The crack becomes the point.',                            dayKey:daysAgo(6)  },
+];
+
+const SEED_NODES = [
+  { id:'p1',  state:'completed', kind:'lesson' },
+  { id:'p2',  state:'completed', kind:'lesson' },
+  { id:'p3',  state:'completed', kind:'review' },
+  { id:'p4',  state:'completed', kind:'lesson' },
+  { id:'p5',  state:'completed', kind:'lesson' },
+  { id:'p6',  state:'current',   kind:'lesson' },
+  { id:'p7',  state:'locked',    kind:'bonus'  },
+  { id:'p8',  state:'locked',    kind:'lesson' },
+  { id:'p9',  state:'locked',    kind:'lesson' },
+  { id:'p10', state:'locked',    kind:'review' },
+];
+
+const PROMPTS = [
+  'A word you overheard this week.',
+  'A word your grandparent used.',
+  'A word for a feeling you have no name for.',
+  'A word that sounds like what it means.',
+  'A word from a book you are reading right now.',
+];
+
+function seedDays() {
+  return Array.from({length:30}, (_, i) => {
+    const idx = 29 - i;
+    return { date: daysAgo(idx), kept: !(idx===14||idx===19||idx===25) };
+  });
+}
+
+/* ─── App state ─── */
+let S = {
+  streak: 23, longest: 31, total: 23,
+  entries: SEED_ENTRIES,
+  nodes:   SEED_NODES,
+  days:    seedDays(),
+  chapter: 1, section: 4, chapterTitle: 'The Quiet Hours',
+  // transient (not persisted)
+  screen: 'path', addStep: 0, addWord: '', addPos: 'n.', addMeaning: '', lastEntry: null,
+};
+
+function loadState() {
+  const saved = Store.get(null);
+  if (!saved) return;
+  const { screen, addStep, addWord, addPos, addMeaning, lastEntry, ...rest } = saved;
+  Object.assign(S, rest);
+  // Recompute date labels for entries (they shift daily)
+  S.entries = S.entries.map(e => ({ ...e, dateLabel: dayLabel(e.dayKey) }));
+}
+
+function saveState() {
+  const { screen, addStep, addWord, addPos, addMeaning, lastEntry, ...persist } = S;
+  Store.set(persist);
+}
+
+/* ─── Streak math ─── */
+function currentStreak(days) {
+  days = days || S.days;
+  let n = 0;
+  for (let i = days.length - 1; i >= 0; i--) {
+    if (days[i].kept) n++; else break;
+  }
+  return n;
+}
+function recomputeLongest(days) {
+  days = days || S.days;
+  let max = 0, cur = 0;
+  for (const d of days) { if (d.kept) { cur++; max = Math.max(max, cur); } else cur = 0; }
+  return max;
+}
+function thisWeek() {
+  const cutoff = daysAgo(7);
+  return S.entries.filter(e => e.dayKey >= cutoff).length;
+}
+
+/* ─── Path geometry ─── */
+function nodePos(i) {
+  const cx = 170, amp = 70;
+  const offsets = [0, amp, amp*1.2, 0, -amp, -amp*1.2];
+  return { x: cx + offsets[i % 6], y: 70 + i * 96 };
+}
+
+/* ─── SVG helpers ─── */
+function flameSVG(size) {
+  size = size || 20;
+  return `<svg viewBox="0 0 24 24" width="${size}" height="${size}" class="flame-anim" style="flex-shrink:0">
+    <path d="M12 2C14 6 18 8 18 13c0 4.5-3 9-6 9S6 17.5 6 13c0-3.5 3-3.5 3-7.5C11 7 11 4 12 2Z"
+      fill="url(#flameGrad)" stroke="#1A0B12" stroke-width="0.8" stroke-linejoin="round"/>
+    <path d="M12 11c1 2 2.5 3.5 2.5 5.5S13.5 20 12 20 9.5 18.5 9.5 16.5 11 14 12 11Z"
+      fill="#FFF1C6" opacity="0.85"/>
+  </svg>`;
+}
+
+function bunnySitSVG(size) {
+  size = size || 100;
+  const h = Math.round(size * 220 / 200);
+  return `<svg viewBox="0 0 200 220" width="${size}" height="${h}" style="display:block">
+    <ellipse cx="100" cy="208" rx="55" ry="6" fill="#000" opacity="0.18"/>
+    <path d="M70 38Q58 8 68 4Q82 6 86 36Q86 56 78 70Q70 60 70 38Z" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <path d="M73 42Q66 22 72 14Q80 18 80 38Q80 52 76 62Q72 54 73 42Z" fill="url(#bEar)" opacity="0.85"/>
+    <path d="M130 38Q142 8 132 4Q118 6 114 36Q114 56 122 70Q130 60 130 38Z" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <path d="M127 42Q134 22 128 14Q120 18 120 38Q120 52 124 62Q128 54 127 42Z" fill="url(#bEar)" opacity="0.85"/>
+    <ellipse cx="100" cy="160" rx="60" ry="48" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.4"/>
+    <ellipse cx="100" cy="170" rx="38" ry="32" fill="url(#bBelly)"/>
+    <ellipse cx="72"  cy="200" rx="14" ry="9"  fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <ellipse cx="128" cy="200" rx="14" ry="9"  fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <circle  cx="68"  cy="200" r="2.4" fill="#a62a52" opacity="0.6"/>
+    <circle  cx="132" cy="200" r="2.4" fill="#a62a52" opacity="0.6"/>
+    <ellipse cx="86"  cy="178" rx="9"  ry="11" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <ellipse cx="114" cy="178" rx="9"  ry="11" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <ellipse cx="100" cy="100" rx="48" ry="44" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.4"/>
+    <ellipse cx="68"  cy="112" rx="12" ry="8"  fill="url(#bCheek)"/>
+    <ellipse cx="132" cy="112" rx="12" ry="8"  fill="url(#bCheek)"/>
+    <ellipse cx="88"  cy="98"  rx="4.2" ry="5.4" fill="#1a0b12"/>
+    <ellipse cx="112" cy="98"  rx="4.2" ry="5.4" fill="#1a0b12"/>
+    <circle  cx="89.5" cy="96" r="1.4" fill="#fff"/>
+    <circle  cx="113.5" cy="96" r="1.4" fill="#fff"/>
+    <path d="M97 110Q100 113 103 110Q102 115 100 116Q98 115 97 110Z" fill="#a62a52" stroke="#1a0b12" stroke-width="0.8"/>
+    <path d="M100 116q0 4-4 5M100 116q0 4 4 5" stroke="#1a0b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <g stroke="#1a0b12" stroke-width="0.8" opacity="0.55" stroke-linecap="round">
+      <line x1="60" y1="118" x2="80" y2="116"/><line x1="60" y1="124" x2="80" y2="120"/>
+      <line x1="140" y1="118" x2="120" y2="116"/><line x1="140" y1="124" x2="120" y2="120"/>
+    </g>
+  </svg>`;
+}
+
+function bunnyHopSVG(size) {
+  size = size || 140;
+  const h = Math.round(size * 220 / 200);
+  return `<svg viewBox="0 0 200 220" width="${size}" height="${h}" class="bunny-hop-anim" style="display:block;margin:0 auto">
+    <ellipse cx="100" cy="212" rx="40" ry="4" fill="#000" opacity="0.12"/>
+    <path d="M62 50Q40 22 50 14Q70 16 80 42Q84 60 78 76Q66 70 62 50Z" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <path d="M65 52Q50 30 56 22Q70 26 76 44Q80 58 76 70Q68 62 65 52Z" fill="url(#bEar)" opacity="0.85"/>
+    <path d="M138 50Q160 22 150 14Q130 16 120 42Q116 60 122 76Q134 70 138 50Z" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <path d="M135 52Q150 30 144 22Q130 26 124 44Q120 58 124 70Q132 62 135 52Z" fill="url(#bEar)" opacity="0.85"/>
+    <ellipse cx="100" cy="150" rx="58" ry="44" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.4"/>
+    <ellipse cx="100" cy="158" rx="36" ry="28" fill="url(#bBelly)"/>
+    <ellipse cx="60"  cy="188" rx="20" ry="10" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2" transform="rotate(-15 60 188)"/>
+    <ellipse cx="140" cy="188" rx="20" ry="10" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2" transform="rotate(15 140 188)"/>
+    <ellipse cx="78"  cy="170" rx="9"  ry="11" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <ellipse cx="122" cy="170" rx="9"  ry="11" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
+    <ellipse cx="100" cy="92"  rx="48" ry="44" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.4"/>
+    <ellipse cx="68"  cy="104" rx="12" ry="8"  fill="url(#bCheek)"/>
+    <ellipse cx="132" cy="104" rx="12" ry="8"  fill="url(#bCheek)"/>
+    <path d="M82 88q6-6 12 0" stroke="#1a0b12" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M106 88q6-6 12 0" stroke="#1a0b12" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M97 102Q100 105 103 102Q102 107 100 108Q98 107 97 102Z" fill="#a62a52" stroke="#1a0b12" stroke-width="0.8"/>
+    <path d="M100 108q0 4-4 5M100 108q0 4 4 5" stroke="#1a0b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function bunnyTinySVG(size) {
+  size = size || 42;
+  return `<svg viewBox="0 0 40 40" width="${size}" height="${size}" style="display:block">
+    <ellipse cx="14" cy="9" rx="3.2" ry="7" fill="#F2EAD8" stroke="#1a0b12" stroke-width="1"/>
+    <ellipse cx="26" cy="9" rx="3.2" ry="7" fill="#F2EAD8" stroke="#1a0b12" stroke-width="1"/>
+    <ellipse cx="14" cy="9" rx="1.4" ry="4.4" fill="#a62a52" opacity="0.7"/>
+    <ellipse cx="26" cy="9" rx="1.4" ry="4.4" fill="#a62a52" opacity="0.7"/>
+    <circle cx="20" cy="22" r="13" fill="#F2EAD8" stroke="#1a0b12" stroke-width="1.2"/>
+    <circle cx="16" cy="22" r="1.4" fill="#1a0b12"/>
+    <circle cx="24" cy="22" r="1.4" fill="#1a0b12"/>
+    <path d="M19 26Q20 27.5 21 26" stroke="#1a0b12" stroke-width="0.9" fill="#a62a52"/>
+  </svg>`;
+}
+
+/* ─── Shared component strings ─── */
+function lbl(text, extraCls) {
+  return `<span class="lbl${extraCls?' '+extraCls:''}">${text}</span>`;
+}
+function entryNo(n) {
+  return `<span class="entry-no">&#x2116;&nbsp;${String(n).padStart(3,'0')}</span>`;
+}
+
+function topBar() {
+  return `<div class="topbar">
+    <button class="topbar-entries" data-action="open-profile">
+      <div class="topbar-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M3 6h18M3 12h18M3 18h12" stroke="rgba(242,234,216,0.78)" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span style="font-family:'Manrope',sans-serif;font-size:14px;font-weight:500;color:var(--cream-soft)">My entries</span>
+    </button>
+    <button class="topbar-streak" data-action="open-profile">
+      ${flameSVG(20)}
+      <span class="topbar-streak-num">${S.streak}</span>
+    </button>
+  </div>`;
+}
+
+function bottomNav(active) {
+  const items = [
+    { id:'path',    act:'go-path',       icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>` },
+    { id:'add',     act:'open-add',      icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>` },
+    { id:'profile', act:'open-profile',  icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>` },
+  ];
+  return `<div class="bottom-nav">
+    ${items.map(it => {
+      const isAdd = it.id === 'add';
+      const isActive = !isAdd && active === it.id;
+      const cls = isAdd ? 'nav-btn nav-btn-add' : `nav-btn${isActive ? ' nav-btn-active' : ''}`;
+      return `<button class="${cls}" data-action="${it.act}">${it.icon}</button>`;
+    }).join('')}
+  </div>`;
+}
+
+/* ─── Node rendering ─── */
+function nodeIcon(node) {
+  if (node.state === 'completed')
+    return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L19 7" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  if (node.state === 'current')
+    return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 5h11l-2 4h7l-9 11 2-7H4V5z" fill="currentColor"/></svg>`;
+  if (node.kind === 'bonus')
+    return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5.5L20 9.5l-4 4 1 5.5-5-2.7-5 2.7 1-5.5-4-4 5.5-1L12 3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`;
+  if (node.kind === 'review')
+    return `<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v9H5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+}
+
+function nodeInlineStyle(node) {
+  if (node.state === 'completed')
+    return 'background:linear-gradient(180deg,#A62A52,#4A1A2D);border:1.5px solid #D96C8E;color:#F2D1D8;box-shadow:0 4px 0 #1A0B12,0 0 0 1px #D96C8E;';
+  if (node.state === 'current')
+    return 'background:linear-gradient(180deg,#E8742E,#C24914);border:1.5px solid #E8742E;color:#fff;box-shadow:0 4px 0 #6E2A0E,inset 0 0 0 1px rgba(255,255,255,0.2),0 0 24px rgba(194,73,20,0.5);transform:translateY(-2px);';
+  if (node.kind === 'bonus')
+    return 'background:#1F0E16;border:1.5px solid #C24914;color:#C24914;box-shadow:0 4px 0 #4A1A2D;opacity:0.85;';
+  if (node.kind === 'review')
+    return 'background:#1F0E16;border:1.5px solid #D96C8E;color:#D96C8E;box-shadow:0 4px 0 #4A1A2D;opacity:0.85;';
+  return 'background:#2C1521;border:1.5px solid #4A1A2D;color:rgba(242,234,216,0.45);box-shadow:0 4px 0 #1A0B12;opacity:0.85;';
+}
+
+/* ─── Screen: Path ─── */
+function renderPath() {
+  const nodes = S.nodes;
+  const positions = nodes.map((_, i) => nodePos(i));
+  const ci = nodes.findIndex(n => n.state === 'current');
+  const H = nodes.length * 96 + 100;
+
+  let dots = '';
+  nodes.slice(0, -1).forEach((n, i) => {
+    const p1 = positions[i], p2 = positions[i+1];
+    const dim = nodes[i+1].state === 'locked';
+    const col = dim ? '#4A1A2D' : '#D96C8E';
+    const op  = dim ? '0.6' : '0.9';
+    for (let j = 1; j < 4; j++) {
+      const t = j/4;
+      const x = p1.x + (p2.x-p1.x)*t, y = p1.y + (p2.y-p1.y)*t;
+      dots += `<div class="path-dot" style="left:${x}px;top:${y}px;background:${col};opacity:${op}"></div>`;
+    }
+  });
+
+  let nodeHtml = '';
+  nodes.forEach((n, i) => {
+    const {x, y} = positions[i];
+    const isCur = n.state === 'current';
+    const isLocked = n.state === 'locked';
+    const tip = isCur ? `<div class="path-node-tip">Start</div>` : '';
+    nodeHtml += `
+      <div class="path-node-wrap" style="left:${x}px;top:${y}px">
+        ${tip}
+        <button style="width:64px;height:64px;border-radius:18px;display:flex;align-items:center;justify-content:center;${nodeInlineStyle(n)}"
+          data-action="${isLocked ? '' : 'open-add'}"${isLocked ? ' disabled' : ''}>
+          ${nodeIcon(n)}
+        </button>
+      </div>`;
+  });
+
+  const glowHtml = ci >= 0 ? `
+    <div style="position:absolute;left:${positions[ci].x}px;top:${positions[ci].y}px;transform:translate(-50%,-50%);
+      width:220px;height:220px;border-radius:999px;
+      background:radial-gradient(circle,rgba(194,73,20,0.18) 0%,transparent 60%);
+      pointer-events:none;filter:blur(8px)"></div>` : '';
+
+  const bunnyHtml = ci >= 0 ? (() => {
+    const {x, y} = positions[ci];
+    const bx = x > 170 ? x - 120 : x + 60;
+    return `<div style="position:absolute;left:${bx}px;top:${y-50}px;width:100px">${bunnySitSVG(100)}</div>`;
+  })() : '';
+
+  const dividerHtml = nodes.length > 5 ? `
+    <div class="path-divider" style="top:${5*96+50}px">
+      <div class="path-divider-line"></div>
+      <span class="lbl lbl-rose">&sect; II &middot; drift</span>
+      <div class="path-divider-line"></div>
+    </div>` : '';
+
+  return `<div class="screen">
+    <div class="sbar"></div>
+    ${topBar()}
+    <div class="chapter-pill">
+      <div class="chapter-pill-text">
+        ${lbl(`Ch.&nbsp;${S.chapter} &middot; Sec.&nbsp;${S.section}`)}
+        <div class="chapter-pill-title">${esc(S.chapterTitle)}</div>
+      </div>
+      <button class="chapter-pill-edit">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M3 21h4l11-11-4-4L3 17v4zM14 6l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="path-scroll" id="path-scroll">
+      <div class="path-canvas" style="height:${H}px">
+        ${glowHtml}${dots}${nodeHtml}${bunnyHtml}${dividerHtml}
+      </div>
+    </div>
+    ${bottomNav('path')}
+  </div>`;
+}
+
+/* ─── Screen: Add word (3 steps) ─── */
+function renderAdd() {
+  const {addStep:step, addWord:word, addPos:pos, addMeaning:meaning, streak, total} = S;
+  const canNext = step===0 ? word.trim().length>0 : step===1 ? true : true;
+  const prompt = PROMPTS[total % PROMPTS.length];
+  const POS = ['n.','v.','adj.','adv.','phr.'];
+
+  let body = '';
+  if (step === 0) {
+    body = `
+      ${lbl(`&#x2116;&nbsp;${String(total+1).padStart(3,'0')} &middot; today`,'lbl-rose')}
+      <h1 class="fraunces" style="font-size:30px;line-height:1.15;color:var(--cream);margin:8px 0 6px">
+        Add a word <em style="color:var(--ember);font-style:italic">to begin.</em>
+      </h1>
+      <p style="font-family:'Manrope',sans-serif;font-size:13px;line-height:1.5;color:var(--cream-faint);margin:4px 0 22px">
+        One a day. Any word that caught you. No essay required.
+      </p>
+      <div class="nudge-card">
+        ${lbl("Today's nudge",'lbl-rose')}
+        <div class="nudge-text">${esc(prompt)}</div>
+      </div>
+      <div class="add-field">
+        ${lbl('Word or phrase')}
+        <input id="word-input" data-action="sync-word" value="${esc(word)}" placeholder="petrichor"
+          autocomplete="off" autocapitalize="none" spellcheck="false"/>
+      </div>
+      <div class="pos-chips">
+        ${POS.map(p=>`<button class="pos-chip ${pos===p?'pos-chip-on':'pos-chip-off'}" data-action="set-pos" data-pos="${p}">${p}</button>`).join('')}
+      </div>`;
+  } else if (step === 1) {
+    body = `
+      ${lbl('What does it mean to you?','lbl-rose')}
+      <h1 class="fraunces" style="font-size:28px;line-height:1.15;color:var(--cream);margin:8px 0 18px">
+        ${esc(word)}
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cream-faint);letter-spacing:0.08em">&middot; ${esc(pos)}</span>
+      </h1>
+      <textarea id="meaning-input" rows="6" placeholder="The earthy smell after rain. The first time I noticed it was on a porch in August.">${esc(meaning)}</textarea>
+      <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cream-faint);letter-spacing:0.1em;margin-top:10px;text-transform:uppercase">
+        A fragment is fine. Skippable.
+      </p>`;
+  } else {
+    body = `
+      ${lbl('Preview','lbl-rose')}
+      <div class="preview-card">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px">
+          ${entryNo(total+1)} ${lbl('Today')}
+        </div>
+        <div class="preview-word">${esc(word)}</div>
+        <div class="preview-pos">&middot; ${esc(pos)}</div>
+        <div class="rule"></div>
+        <p class="preview-meaning">${meaning ? esc(meaning) : '<em style="opacity:0.5">No meaning written.</em>'}</p>
+      </div>`;
+  }
+
+  return `<div class="screen">
+    <div class="sbar"></div>
+    <div class="add-top">
+      <button class="add-close" data-action="go-path">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <div class="add-progress">
+        ${[0,1,2].map(i=>`<div class="prog-bar ${i<=step?'prog-on':'prog-off'}"></div>`).join('')}
+      </div>
+      <div style="display:flex;align-items:center;gap:4px">
+        ${flameSVG(18)}
+        <span style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--ember-hi)">${streak}</span>
+      </div>
+    </div>
+    <div class="add-body">${body}</div>
+    <div class="add-footer">
+      <button class="add-btn ${canNext?'add-btn-on':'add-btn-off'}" data-action="add-next"${canNext?'':' disabled'}>
+        ${step === 2 ? 'Drop it' : 'Continue'}
+      </button>
+    </div>
+  </div>`;
+}
+
+/* ─── Screen: Reveal ─── */
+function renderReveal() {
+  const e = S.lastEntry;
+  if (!e) { S.screen = 'path'; return renderPath(); }
+  return `<div class="screen" style="position:relative;overflow:hidden">
+    <div class="reveal-bloom"></div>
+    <div class="sbar"></div>
+    <div class="reveal-body">
+      ${bunnyHopSVG(140)}
+      <div style="margin-top:12px">${lbl(`Day&nbsp;${S.streak} &middot; entry&nbsp;&#x2116;&nbsp;${String(S.total).padStart(3,'0')}`,'lbl-rose')}</div>
+      <h1 class="fraunces" style="font-size:22px;color:var(--cream);margin:16px 0 4px">
+        Kept. <em style="color:var(--ember);font-style:italic">Onward.</em>
+      </h1>
+      <p style="font-family:'Manrope',sans-serif;font-size:13px;color:var(--cream-faint);margin:0 0 0;max-width:280px">
+        You added <strong style="color:var(--cream-soft);font-weight:600">${esc(e.word)}</strong>. The streak holds.
+      </p>
+      <div class="reveal-card">
+        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
+          ${entryNo(S.total)} ${lbl(esc(e.pos))}
+        </div>
+        <div class="fraunces" style="font-size:32px;color:var(--cream);line-height:1.05">${esc(e.word)}</div>
+        <div class="rule"></div>
+        <p style="font-family:'Fraunces',serif;font-size:14px;line-height:1.5;color:var(--cream-soft);margin:0">
+          ${e.meaning ? esc(e.meaning) : '<em>No meaning. The word alone is enough.</em>'}
+        </p>
+      </div>
+      <div class="reveal-badge">
+        ${flameSVG(22)}
+        <div style="text-align:left">
+          <div style="font-family:'Fraunces',serif;font-size:16px;color:var(--ember-hi);font-weight:600">${S.streak} days kept</div>
+          ${lbl('Quietly impressive.')}
+        </div>
+      </div>
+    </div>
+    <div style="padding:12px 16px 28px;position:relative;z-index:1">
+      <button data-action="go-path" style="width:100%;height:56px;border-radius:16px;
+        background:linear-gradient(180deg,var(--ember-hi),var(--ember));
+        border:1px solid var(--ember-hi);color:#fff;
+        font-family:'Manrope',sans-serif;font-weight:700;font-size:15px;
+        letter-spacing:0.04em;text-transform:uppercase;
+        box-shadow:0 4px 0 #6E2A0E">Back to the path</button>
+    </div>
+  </div>`;
+}
+
+/* ─── Screen: Profile ─── */
+function renderProfile() {
+  const cells = S.days.map((d, i) => {
+    const isToday = i === S.days.length - 1;
+    const bg     = d.kept ? (isToday ? 'var(--ember-hi)' : 'var(--wine)') : 'var(--surface-3)';
+    const border = d.kept ? (isToday ? 'var(--ember-hi)' : 'var(--rose)')  : 'var(--wine-deep)';
+    const shadow = isToday && d.kept ? '0 0 8px rgba(194,73,20,0.5)' : 'none';
+    return `<div class="streak-cell" style="background:${bg};border:1px solid ${border};box-shadow:${shadow};opacity:${d.kept?1:0.6}" title="${d.date}"></div>`;
+  }).join('');
+
+  const otd = { word:'querencia', pos:'n.', meaning:"A place where you feel at home, where you draw strength. A bullfighter's term, originally.", daysAgo:365 };
+
+  return `<div class="screen">
+    <div class="sbar"></div>
+    <div class="profile-header">
+      <button class="profile-back" data-action="go-path">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="profile-title">Your book</div>
+      <div style="width:36px"></div>
+    </div>
+    <div class="profile-body">
+      <div class="profile-identity">
+        <div class="profile-avatar">${bunnyTinySVG(42)}</div>
+        <div>
+          <div class="profile-name">The Reader</div>
+          ${lbl("Member since &middot; spring '26")}
+        </div>
+      </div>
+
+      <div class="streak-card">
+        <div class="streak-card-top">
+          <div>
+            ${lbl('Last 30 days','lbl-rose')}
+            <div class="streak-count">${S.streak} <em>days kept</em></div>
+          </div>
+          ${flameSVG(28)}
+        </div>
+        <div class="streak-grid">${cells}</div>
+        <div class="streak-foot">
+          ${lbl('30 days ago')} ${lbl('Today')}
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-tile">${lbl('Entries')}<div class="stat-val">${S.total}</div></div>
+        <div class="stat-tile">${lbl('Longest')}<div class="stat-val" style="color:var(--ember-hi)">${S.longest}</div></div>
+        <div class="stat-tile">${lbl('This week')}<div class="stat-val">${thisWeek()}</div></div>
+      </div>
+
+      <div class="on-this-day">
+        <div class="otd-glow"></div>
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px">
+          ${lbl(`On this day &middot; ${otd.daysAgo} days ago`,'lbl-rose')}
+        </div>
+        <div class="otd-word">${esc(otd.word)}
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cream-faint);letter-spacing:0.1em">&middot; ${esc(otd.pos)}</span>
+        </div>
+        <p class="otd-meaning">${esc(otd.meaning)}</p>
+      </div>
+
+      <div class="recent-head">
+        <div class="recent-head-title">Recent entries</div>
+        ${lbl('&#x2116; Newest')}
+      </div>
+      <div>
+        ${S.entries.slice(0,6).map(e => `
+          <button class="entry-row">
+            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:2px">
+              ${entryNo(e.n)} ${lbl(dayLabel(e.dayKey))}
+            </div>
+            <div style="display:flex;align-items:baseline;gap:8px">
+              <span class="entry-row-word">${esc(e.word)}</span>
+              <span class="entry-row-pos">&middot; ${esc(e.pos)}</span>
+            </div>
+            ${e.meaning ? `<p class="entry-row-meaning">${esc(e.meaning)}</p>` : ''}
+          </button>`).join('')}
+      </div>
+    </div>
+    ${bottomNav('profile')}
+  </div>`;
+}
+
+/* ─── Render dispatcher ─── */
+function renderApp() {
+  const app = document.getElementById('app');
+  switch (S.screen) {
+    case 'path':    app.innerHTML = renderPath();    break;
+    case 'add':     app.innerHTML = renderAdd();     break;
+    case 'reveal':  app.innerHTML = renderReveal();  break;
+    case 'profile': app.innerHTML = renderProfile(); break;
+  }
+  // Focus input on add screen
+  if (S.screen === 'add') {
+    requestAnimationFrame(() => {
+      const el = document.getElementById(S.addStep === 0 ? 'word-input' : 'meaning-input');
+      el && el.focus();
+    });
+  }
+  // Scroll path to current node
+  if (S.screen === 'path') {
+    requestAnimationFrame(() => {
+      const ci = S.nodes.findIndex(n => n.state === 'current');
+      if (ci < 0) return;
+      const {y} = nodePos(ci);
+      const scroll = document.getElementById('path-scroll');
+      if (scroll) scroll.scrollTop = Math.max(0, y - scroll.clientHeight / 2 + 50);
+    });
+  }
+}
+
+/* ─── Sync transient input state to S before re-render ─── */
+function syncInputs() {
+  if (S.screen !== 'add') return;
+  const w = document.getElementById('word-input');
+  const m = document.getElementById('meaning-input');
+  if (w) S.addWord = w.value;
+  if (m) S.addMeaning = m.value;
+}
+
+/* ─── Commit a new entry ─── */
+function commitEntry() {
+  const word    = S.addWord.trim();
+  const pos     = S.addPos;
+  const meaning = S.addMeaning.trim();
+  const n       = S.total + 1;
+  const dk      = today();
+
+  const newEntry = { id:`e${n}-${Date.now()}`, n, word, pos, meaning, dayKey: dk, dateAdded: new Date().toISOString() };
+
+  const updatedEntries = [newEntry, ...S.entries];
+
+  const ci = S.nodes.findIndex(nd => nd.state === 'current');
+  const updatedNodes = S.nodes.map((nd, i) => {
+    if (i === ci)   return { ...nd, state: 'completed' };
+    if (i === ci+1) return { ...nd, state: 'current'   };
+    return nd;
+  });
+
+  const updatedDays = S.days.map((d, i) =>
+    i === S.days.length - 1 ? { ...d, kept: true } : d
+  );
+
+  S.entries = updatedEntries;
+  S.nodes   = updatedNodes;
+  S.days    = updatedDays;
+  S.total   = n;
+  S.streak  = currentStreak(updatedDays);
+  S.longest = Math.max(recomputeLongest(updatedDays), S.longest);
+  S.lastEntry = newEntry;
+  S.screen  = 'reveal';
+  saveState();
+  renderApp();
+}
+
+/* ─── Events ─── */
+const app = document.getElementById('app');
+
+app.addEventListener('click', e => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  if (!action) return;
+
+  syncInputs();
+
+  switch (action) {
+    case 'go-path':
+      S.screen = 'path'; S.addStep = 0; S.addWord = ''; S.addMeaning = ''; S.addPos = 'n.';
+      renderApp();
+      break;
+    case 'open-add':
+      S.screen = 'add'; S.addStep = 0; S.addWord = ''; S.addMeaning = ''; S.addPos = 'n.';
+      renderApp();
+      break;
+    case 'open-profile':
+      S.screen = 'profile';
+      renderApp();
+      break;
+    case 'set-pos':
+      S.addPos = btn.dataset.pos;
+      renderApp();
+      break;
+    case 'add-next': {
+      const step = S.addStep;
+      if (step === 0) {
+        const w = document.getElementById('word-input');
+        const val = (w ? w.value : S.addWord).trim();
+        if (!val) return;
+        S.addWord = val; S.addStep = 1;
+        renderApp();
+      } else if (step === 1) {
+        const m = document.getElementById('meaning-input');
+        S.addMeaning = m ? m.value.trim() : S.addMeaning;
+        S.addStep = 2;
+        renderApp();
+      } else {
+        commitEntry();
+      }
+      break;
+    }
+  }
+});
+
+app.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && S.screen === 'add' && S.addStep === 0) {
+    const input = document.getElementById('word-input');
+    if (document.activeElement === input && input.value.trim()) {
+      S.addWord = input.value.trim(); S.addStep = 1;
+      renderApp();
+    }
+  }
+});
+
+/* ─── Init ─── */
+loadState();
+renderApp();
+</script>
+</body>
+</html>
