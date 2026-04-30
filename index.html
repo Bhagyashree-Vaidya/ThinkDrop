@@ -34,28 +34,18 @@
     }
 
     /* ─── Base ─── */
-    html, body {
-      height: 100%;
-      background: #0F0709;
-    }
+    html, body { height: 100%; background: #0F0709; }
     body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100dvh;
-      -webkit-font-smoothing: antialiased;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100dvh; -webkit-font-smoothing: antialiased;
     }
-    /* Paper grain texture */
     body::before {
-      content: "";
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0 0.7 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
       mix-blend-mode: screen; opacity: 0.5;
     }
-    /* Ambient radial glows behind the app frame */
     body::after {
-      content: "";
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background:
         radial-gradient(ellipse 60% 40% at 30% 20%, rgba(166,42,82,0.18), transparent 60%),
         radial-gradient(ellipse 50% 40% at 80% 70%, rgba(194,73,20,0.10), transparent 60%);
@@ -63,15 +53,10 @@
 
     /* ─── App frame ─── */
     #app {
-      width: 390px;
-      height: 844px;
-      max-width: 100vw;
-      max-height: 100dvh;
-      background: var(--bg);
-      position: relative;
-      z-index: 1;
-      overflow: hidden;
-      border-radius: 50px;
+      width: 390px; height: 844px;
+      max-width: 100vw; max-height: 100dvh;
+      background: var(--bg); position: relative; z-index: 1;
+      overflow: hidden; border-radius: 50px;
       box-shadow: 0 40px 120px rgba(0,0,0,0.85), 0 0 0 1px #2C1521;
     }
     @media (max-width: 420px) {
@@ -81,13 +66,9 @@
 
     /* ─── Screen ─── */
     .screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      background: var(--bg);
-      color: var(--cream);
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      overflow: hidden; background: var(--bg); color: var(--cream);
     }
 
     /* ─── Status bar spacer ─── */
@@ -96,178 +77,114 @@
     /* ─── Typography ─── */
     .lbl {
       font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
+      font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
       color: var(--cream-faint);
     }
     .lbl-rose { color: var(--rose); }
-
     .entry-no {
       font-family: 'JetBrains Mono', ui-monospace, monospace;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--rose);
+      font-size: 11px; letter-spacing: 0.1em; color: var(--rose);
     }
-
     .fraunces {
       font-family: 'Fraunces', Georgia, serif;
-      font-variation-settings: 'opsz' 144, 'SOFT' 100;
-      font-weight: 400;
+      font-variation-settings: 'opsz' 144, 'SOFT' 100; font-weight: 400;
     }
 
     /* ─── Top bar ─── */
     .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 16px 14px;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 8px 16px 14px; flex-shrink: 0;
     }
     .topbar-entries {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 10px 6px 6px;
-      border-radius: 10px;
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 10px 6px 6px; border-radius: 10px;
     }
     .topbar-icon {
-      width: 28px; height: 28px;
-      border-radius: 8px;
-      background: var(--surface-3);
-      border: 1px solid var(--rule);
+      width: 28px; height: 28px; border-radius: 8px;
+      background: var(--surface-3); border: 1px solid var(--rule);
       display: flex; align-items: center; justify-content: center;
     }
     .topbar-streak {
       display: flex; align-items: center; gap: 6px;
-      background: var(--surface-2);
-      border: 1px solid var(--wine-deep);
-      border-radius: 999px;
-      padding: 6px 14px 6px 8px;
+      background: var(--surface-2); border: 1px solid var(--wine-deep);
+      border-radius: 999px; padding: 6px 14px 6px 8px;
       box-shadow: inset 0 0 0 1px rgba(194,73,20,0.15);
     }
     .topbar-streak-num {
-      font-family: 'Fraunces', serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--ember-hi);
-      font-variation-settings: 'opsz' 144;
-      line-height: 1;
+      font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+      color: var(--ember-hi); font-variation-settings: 'opsz' 144; line-height: 1;
     }
 
     /* ─── Chapter pill ─── */
     .chapter-pill {
-      margin: 0 16px 14px;
-      display: flex; align-items: center; gap: 12px;
+      margin: 0 16px 14px; display: flex; align-items: center; gap: 12px;
       background: linear-gradient(180deg, var(--wine) 0%, #8E1F44 100%);
-      border-radius: 16px;
-      padding: 12px 14px 12px 18px;
+      border-radius: 16px; padding: 12px 14px 12px 18px;
       border: 1px solid var(--rose);
       box-shadow: 0 0 0 1px var(--wine-deep), 0 8px 24px -8px var(--wine);
       flex-shrink: 0;
     }
     .chapter-pill-text { flex: 1; min-width: 0; }
     .chapter-pill-title {
-      font-family: 'Fraunces', serif;
-      font-size: 17px;
-      font-weight: 500;
-      color: var(--cream);
-      font-variation-settings: 'opsz' 144, 'SOFT' 50;
-      margin-top: 2px;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-family: 'Fraunces', serif; font-size: 17px; font-weight: 500;
+      color: var(--cream); font-variation-settings: 'opsz' 144, 'SOFT' 50;
+      margin-top: 2px; line-height: 1.2;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .chapter-pill-edit {
-      width: 34px; height: 34px;
-      border-radius: 10px;
-      background: rgba(0,0,0,0.25);
-      border: 1px solid var(--rose);
-      color: var(--blush);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      width: 34px; height: 34px; border-radius: 10px;
+      background: rgba(0,0,0,0.25); border: 1px solid var(--rose); color: var(--blush);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
 
     /* ─── Bottom nav ─── */
     .bottom-nav {
-      position: absolute;
-      bottom: 28px; left: 16px; right: 16px;
-      background: var(--surface-2);
-      border: 1px solid var(--wine-deep);
-      border-radius: 22px;
-      padding: 8px;
+      position: absolute; bottom: 28px; left: 16px; right: 16px;
+      background: var(--surface-2); border: 1px solid var(--wine-deep);
+      border-radius: 22px; padding: 8px;
       display: flex; align-items: center; justify-content: space-around;
       box-shadow: 0 12px 40px -8px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(217,108,142,0.06);
       z-index: 5;
     }
     .nav-btn {
-      width: 44px; height: 44px;
-      border-radius: 14px;
-      color: var(--cream-faint);
-      display: flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; border-radius: 14px;
+      color: var(--cream-faint); display: flex; align-items: center; justify-content: center;
       transition: background 140ms;
     }
     .nav-btn-active { background: var(--surface-3); color: var(--cream); }
     .nav-btn-add {
-      width: 56px; height: 56px;
-      border-radius: 18px;
+      width: 56px; height: 56px; border-radius: 18px;
       background: linear-gradient(180deg, var(--ember-hi), var(--ember));
-      border: 1px solid var(--ember-hi);
-      color: #fff;
+      border: 1px solid var(--ember-hi); color: #fff;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18), 0 8px 20px -4px rgba(194,73,20,0.5);
     }
 
     /* ─── Path screen ─── */
     .path-scroll {
-      flex: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 140px;
+      flex: 1; overflow-y: auto; overflow-x: hidden;
+      -webkit-overflow-scrolling: touch; padding-bottom: 140px;
     }
-    .path-canvas {
-      position: relative;
-      margin: 0 16px;
-    }
-    .path-node-wrap {
-      position: absolute;
-      transform: translate(-50%, -50%);
-    }
+    .path-canvas { position: relative; margin: 0 16px; }
+    .path-node-wrap { position: absolute; transform: translate(-50%, -50%); }
     .path-dot {
-      position: absolute;
-      width: 6px; height: 6px;
-      border-radius: 999px;
-      transform: translate(-50%, -50%);
+      position: absolute; width: 6px; height: 6px;
+      border-radius: 999px; transform: translate(-50%, -50%);
     }
     .path-node-tip {
-      position: absolute;
-      left: 50%; top: -44px;
-      transform: translateX(-50%);
-      background: var(--cream); color: var(--ink);
-      padding: 5px 12px;
-      border-radius: 10px;
-      font-family: 'Manrope', sans-serif;
-      font-weight: 700; font-size: 11px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      box-shadow: 0 3px 0 #C5B89A;
-      white-space: nowrap;
-      pointer-events: none;
+      position: absolute; left: 50%; top: -44px; transform: translateX(-50%);
+      background: var(--cream); color: var(--ink); padding: 5px 12px;
+      border-radius: 10px; font-family: 'Manrope', sans-serif;
+      font-weight: 700; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+      box-shadow: 0 3px 0 #C5B89A; white-space: nowrap; pointer-events: none;
     }
     .path-node-tip::after {
-      content: '';
-      position: absolute;
-      left: 50%; bottom: -5px;
+      content: ''; position: absolute; left: 50%; bottom: -5px;
       transform: translateX(-50%) rotate(45deg);
-      width: 8px; height: 8px;
-      background: var(--cream);
+      width: 8px; height: 8px; background: var(--cream);
     }
     .path-divider {
-      position: absolute;
-      left: 0; right: 0;
-      display: flex; align-items: center; gap: 12px;
-      padding: 0 8px;
+      position: absolute; left: 0; right: 0;
+      display: flex; align-items: center; gap: 12px; padding: 0 8px;
     }
     .path-divider-line {
       flex: 1; height: 1px;
@@ -277,16 +194,12 @@
     /* ─── Add screen ─── */
     .add-top {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 16px 18px;
-      flex-shrink: 0;
+      padding: 8px 16px 18px; flex-shrink: 0;
     }
     .add-close {
-      width: 36px; height: 36px;
-      border-radius: 12px;
-      background: var(--surface-2);
-      border: 1px solid var(--wine-deep);
-      color: var(--cream-soft);
-      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 12px;
+      background: var(--surface-2); border: 1px solid var(--wine-deep);
+      color: var(--cream-soft); display: flex; align-items: center; justify-content: center;
     }
     .add-progress { flex: 1; margin: 0 14px; display: flex; gap: 6px; }
     .prog-bar { flex: 1; height: 8px; border-radius: 6px; }
@@ -296,241 +209,148 @@
     .add-footer { padding: 12px 16px 28px; flex-shrink: 0; }
     .add-btn {
       width: 100%; height: 56px; border-radius: 16px;
-      font-family: 'Manrope', sans-serif;
-      font-weight: 700; font-size: 15px;
+      font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 15px;
       letter-spacing: 0.04em; text-transform: uppercase;
     }
     .add-btn-on {
       background: linear-gradient(180deg, var(--ember-hi), var(--ember));
-      border: 1px solid var(--ember-hi); color: #fff;
-      box-shadow: 0 4px 0 #6E2A0E;
+      border: 1px solid var(--ember-hi); color: #fff; box-shadow: 0 4px 0 #6E2A0E;
     }
     .add-btn-off {
-      background: var(--surface-3);
-      border: 1px solid var(--wine-deep);
-      color: var(--cream-faint);
-      cursor: not-allowed;
+      background: var(--surface-3); border: 1px solid var(--wine-deep);
+      color: var(--cream-faint); cursor: not-allowed;
     }
-    .add-field {
-      background: var(--surface);
-      border: 1px solid var(--wine-deep);
-      border-radius: 16px;
-      padding: 14px 16px;
-    }
-    #word-input {
+    .add-field { background: var(--surface); border: 1px solid var(--wine-deep); border-radius: 16px; padding: 14px 16px; }
+    #title-input, #word-input {
       width: 100%; background: transparent; border: none; outline: none;
       font-family: 'Fraunces', serif;
       font-variation-settings: 'opsz' 144, 'SOFT' 100;
       font-size: 32px; font-weight: 400; color: var(--cream);
       margin-top: 6px; padding: 0;
     }
-    #word-input::placeholder { color: var(--cream-faint); opacity: 1; }
-    .pos-chips { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-    .pos-chip {
-      padding: 7px 14px; border-radius: 999px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px; letter-spacing: 0.06em;
-      transition: background 120ms, border-color 120ms, color 120ms;
-    }
-    .pos-chip-on  { background: var(--wine); border: 1px solid var(--rose);      color: var(--cream); }
-    .pos-chip-off { background: transparent;  border: 1px solid var(--wine-deep); color: var(--cream-faint); }
+    #title-input::placeholder, #word-input::placeholder { color: var(--cream-faint); opacity: 1; }
     .nudge-card {
-      background: var(--surface);
-      border: 1px dashed rgba(217,108,142,0.33);
-      border-radius: 14px;
-      padding: 10px 14px; margin-bottom: 18px;
+      background: var(--surface); border: 1px dashed rgba(217,108,142,0.33);
+      border-radius: 14px; padding: 10px 14px; margin-bottom: 18px;
     }
-    .nudge-text {
-      font-family: 'Fraunces', serif;
-      font-size: 14px; color: var(--cream-soft);
-      font-style: italic; margin-top: 4px;
-    }
-    #meaning-input {
-      width: 100%; background: var(--surface);
-      border: 1px solid var(--wine-deep);
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-family: 'Fraunces', serif;
-      font-size: 16px; line-height: 1.5;
+    .nudge-text { font-family: 'Fraunces', serif; font-size: 14px; color: var(--cream-soft); font-style: italic; margin-top: 4px; }
+    #body-input {
+      width: 100%; background: var(--surface); border: 1px solid var(--wine-deep);
+      border-radius: 14px; padding: 14px 16px;
+      font-family: 'Fraunces', serif; font-size: 16px; line-height: 1.5;
       color: var(--cream); outline: none; resize: none;
     }
-    #meaning-input::placeholder { color: var(--cream-faint); opacity: 1; }
+    #body-input::placeholder { color: var(--cream-faint); opacity: 1; }
+    #source-input {
+      display: block; width: 100%; background: var(--surface); border: 1px solid var(--wine-deep);
+      border-radius: 10px; padding: 10px 14px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em;
+      color: var(--cream-soft); outline: none; margin-top: 6px;
+    }
     .preview-card {
-      margin-top: 12px;
-      background: var(--surface);
-      border: 1px solid var(--wine-deep);
+      margin-top: 12px; background: var(--surface); border: 1px solid var(--wine-deep);
       border-radius: 16px; padding: 20px 18px;
     }
-    .preview-word {
-      font-family: 'Fraunces', serif;
-      font-variation-settings: 'opsz' 144, 'SOFT' 100;
-      font-size: 36px; line-height: 1.05; color: var(--cream);
-      margin: 4px 0;
+    .preview-title {
+      font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'SOFT' 100;
+      font-size: 36px; line-height: 1.05; color: var(--cream); margin: 4px 0;
     }
     .preview-pos {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 11px; color: var(--cream-faint);
-      letter-spacing: 0.12em; text-transform: uppercase;
-      margin-bottom: 14px;
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--cream-faint);
+      letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;
     }
     .rule { height: 1px; background: var(--rule); margin: 6px 0 14px; }
-    .preview-meaning {
-      font-family: 'Fraunces', serif;
-      font-size: 15px; line-height: 1.55;
-      color: var(--cream-soft); margin: 0;
+    .preview-meaning { font-family: 'Fraunces', serif; font-size: 15px; line-height: 1.55; color: var(--cream-soft); margin: 0; }
+
+    /* ─── Kind picker cards ─── */
+    .kind-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kind-card {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 3px;
+      background: var(--surface); border: 1.5px solid var(--wine-deep);
+      border-radius: 16px; padding: 14px 14px 12px;
+      transition: background 120ms, border-color 120ms; cursor: pointer; text-align: left;
     }
+    .kind-card:active { background: var(--surface-2); }
+    .kind-card-sel { background: var(--surface-2); border-color: var(--rose); box-shadow: inset 0 0 0 1px rgba(217,108,142,0.15); }
+    .kind-card-icon { font-size: 20px; line-height: 1; margin-bottom: 5px; }
+    .kind-card-label { font-family: 'Fraunces', serif; font-size: 16px; color: var(--cream); font-variation-settings: 'opsz' 144, 'SOFT' 50; line-height: 1.1; }
+    .kind-card-sub { font-family: 'Manrope', sans-serif; font-size: 11px; color: var(--cream-faint); line-height: 1.35; }
 
     /* ─── Reveal screen ─── */
     .reveal-bloom {
-      position: absolute;
-      top: -100px; left: 50%; transform: translateX(-50%);
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
       width: 500px; height: 500px; border-radius: 999px;
       background: radial-gradient(circle, rgba(194,73,20,0.22) 0%, transparent 60%);
-      filter: blur(20px);
-      pointer-events: none;
+      filter: blur(20px); pointer-events: none;
     }
     .reveal-body {
       flex: 1; display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 20px 24px;
-      position: relative; z-index: 1; text-align: center;
+      padding: 20px 24px; position: relative; z-index: 1; text-align: center;
     }
     .reveal-card {
-      width: 100%; max-width: 320px;
-      background: var(--surface);
-      border: 1px solid rgba(217,108,142,0.22);
-      border-radius: 18px; padding: 18px 20px;
-      text-align: left;
-      box-shadow: 0 0 40px -10px rgba(194,73,20,0.22);
-      margin-top: 16px;
+      width: 100%; max-width: 320px; background: var(--surface);
+      border: 1px solid rgba(217,108,142,0.22); border-radius: 18px; padding: 18px 20px;
+      text-align: left; box-shadow: 0 0 40px -10px rgba(194,73,20,0.22); margin-top: 16px;
     }
     .reveal-badge {
-      margin-top: 20px;
-      background: var(--surface-2);
-      border: 1px solid var(--wine-deep);
-      border-radius: 14px; padding: 10px 16px;
-      display: flex; align-items: center; gap: 10px;
+      margin-top: 20px; background: var(--surface-2); border: 1px solid var(--wine-deep);
+      border-radius: 14px; padding: 10px 16px; display: flex; align-items: center; gap: 10px;
     }
 
     /* ─── Profile screen ─── */
     .profile-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 8px 16px 14px;
-      flex-shrink: 0;
+      padding: 8px 16px 14px; flex-shrink: 0;
     }
     .profile-back {
       width: 36px; height: 36px; border-radius: 12px;
       background: var(--surface-2); border: 1px solid var(--wine-deep);
-      color: var(--cream-soft);
-      display: flex; align-items: center; justify-content: center;
+      color: var(--cream-soft); display: flex; align-items: center; justify-content: center;
     }
-    .profile-title {
-      font-family: 'Fraunces', serif;
-      font-size: 17px; font-weight: 500; color: var(--cream);
-    }
-    .profile-body {
-      flex: 1; overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 0 16px 130px;
-    }
+    .profile-title { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 500; color: var(--cream); }
+    .profile-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 16px 130px; }
     .profile-identity { display: flex; align-items: center; gap: 14px; padding: 4px 4px 18px; }
     .profile-avatar {
       width: 64px; height: 64px; border-radius: 18px;
       background: linear-gradient(135deg, var(--wine), var(--wine-deep));
       border: 1px solid var(--rose);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .profile-name {
-      font-family: 'Fraunces', serif;
-      font-variation-settings: 'opsz' 144, 'SOFT' 50;
+      font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'SOFT' 50;
       font-size: 22px; color: var(--cream); line-height: 1.1;
     }
-    .streak-card {
-      background: var(--surface);
-      border: 1px solid var(--wine-deep);
-      border-radius: 18px; padding: 18px 18px 16px;
-    }
-    .streak-card-top {
-      display: flex; justify-content: space-between;
-      align-items: baseline; margin-bottom: 14px;
-    }
-    .streak-count {
-      font-family: 'Fraunces', serif;
-      font-variation-settings: 'opsz' 144;
-      font-size: 30px; color: var(--cream); line-height: 1; margin-top: 6px;
-    }
+    .streak-card { background: var(--surface); border: 1px solid var(--wine-deep); border-radius: 18px; padding: 18px 18px 16px; }
+    .streak-card-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+    .streak-count { font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144; font-size: 30px; color: var(--cream); line-height: 1; margin-top: 6px; }
     .streak-count em { color: var(--ember); font-style: italic; font-size: 18px; }
-    .streak-grid {
-      display: grid;
-      grid-template-columns: repeat(15, 1fr);
-      gap: 4px;
-    }
+    .streak-grid { display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; }
     .streak-cell { aspect-ratio: 1; border-radius: 4px; }
     .streak-foot { display: flex; justify-content: space-between; margin-top: 10px; }
     .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 12px; }
-    .stat-tile {
-      background: var(--surface); border: 1px solid var(--wine-deep);
-      border-radius: 14px; padding: 14px;
-    }
-    .stat-val {
-      font-family: 'Fraunces', serif;
-      font-variation-settings: 'opsz' 144, 'SOFT' 50;
-      font-size: 26px; color: var(--cream); line-height: 1.1; margin-top: 4px;
-    }
+    .stat-tile { background: var(--surface); border: 1px solid var(--wine-deep); border-radius: 14px; padding: 14px; }
+    .stat-val { font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'SOFT' 50; font-size: 26px; color: var(--cream); line-height: 1.1; margin-top: 4px; }
     .on-this-day {
       margin-top: 18px;
       background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
-      border: 1px solid rgba(217,108,142,0.22);
-      border-radius: 18px; padding: 18px 20px;
+      border: 1px solid rgba(217,108,142,0.22); border-radius: 18px; padding: 18px 20px;
       position: relative; overflow: hidden;
     }
     .otd-glow {
-      position: absolute; top: -20px; right: -20px;
-      width: 120px; height: 120px; border-radius: 999px;
-      background: radial-gradient(circle, rgba(194,73,20,0.18), transparent 70%);
-      pointer-events: none;
+      position: absolute; top: -20px; right: -20px; width: 120px; height: 120px;
+      border-radius: 999px; background: radial-gradient(circle, rgba(194,73,20,0.18), transparent 70%); pointer-events: none;
     }
-    .otd-word {
-      font-family: 'Fraunces', serif;
-      font-variation-settings: 'opsz' 144, 'SOFT' 100;
-      font-size: 30px; color: var(--cream); line-height: 1.05;
-    }
-    .otd-meaning {
-      font-family: 'Fraunces', serif;
-      font-size: 14px; line-height: 1.5;
-      color: var(--cream-soft); margin: 8px 0 0;
-    }
-    .recent-head {
-      margin-top: 22px; margin-bottom: 8px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
+    .otd-word { font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'SOFT' 100; font-size: 28px; color: var(--cream); line-height: 1.1; }
+    .otd-meaning { font-family: 'Fraunces', serif; font-size: 14px; line-height: 1.5; color: var(--cream-soft); margin: 8px 0 0; }
+    .recent-head { margin-top: 22px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between; }
     .recent-head-title { font-family: 'Fraunces', serif; font-size: 15px; color: var(--cream); }
     .entry-row {
-      display: block; width: 100%; text-align: left;
-      background: transparent; border: none;
-      padding: 14px 4px;
-      border-bottom: 1px solid var(--rule);
+      display: block; width: 100%; text-align: left; background: transparent; border: none;
+      padding: 14px 4px; border-bottom: 1px solid var(--rule);
     }
-    .entry-row-word {
-      font-family: 'Fraunces', serif;
-      font-variation-settings: 'opsz' 144, 'SOFT' 100;
-      font-size: 22px; color: var(--cream);
-    }
-    .entry-row-pos {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 10px; color: var(--cream-faint);
-      letter-spacing: 0.1em; text-transform: uppercase;
-    }
-    .entry-row-meaning {
-      font-family: 'Fraunces', serif;
-      font-size: 13px; line-height: 1.45;
-      color: var(--cream-soft); margin: 4px 0 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
+    .entry-row-title { font-family: 'Fraunces', serif; font-variation-settings: 'opsz' 144, 'SOFT' 100; font-size: 20px; color: var(--cream); }
+    .entry-row-meaning { font-family: 'Fraunces', serif; font-size: 13px; line-height: 1.45; color: var(--cream-soft); margin: 4px 0 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
     /* ─── Animations ─── */
     @keyframes flicker {
@@ -541,12 +361,13 @@
     }
     .flame-anim { transform-origin: 50% 90%; animation: flicker 2.4s ease-in-out infinite; display: block; }
 
-    @keyframes hop {
+    @keyframes huskyHop {
       0%, 100% { transform: translateY(0); }
-      40%       { transform: translateY(-14px); }
-      55%       { transform: translateY(-8px); }
+      35%      { transform: translateY(-16px); }
+      55%      { transform: translateY(-8px); }
+      75%      { transform: translateY(-3px); }
     }
-    .bunny-hop-anim { animation: hop 1.2s ease-in-out infinite; display: block; }
+    .husky-hop-anim { animation: huskyHop 1.1s ease-in-out infinite; display: block; }
 
     /* ─── Scrollbar ─── */
     ::-webkit-scrollbar { width: 0; height: 0; }
@@ -555,29 +376,33 @@
 <body>
 
 <!-- Shared SVG gradient defs (referenced by all inline SVGs) -->
-<svg style="display:none;position:absolute" aria-hidden="true">
+<svg style="width:0;height:0;position:absolute;overflow:hidden" aria-hidden="true">
   <defs>
     <radialGradient id="flameGrad" cx="50%" cy="70%" r="50%">
       <stop offset="0%"   stop-color="#FFE6A8"/>
       <stop offset="35%"  stop-color="#E8742E"/>
       <stop offset="100%" stop-color="#C24914"/>
     </radialGradient>
-    <radialGradient id="bBody" cx="50%" cy="40%" r="60%">
-      <stop offset="0%"   stop-color="#fff5e8"/>
-      <stop offset="60%"  stop-color="#F2EAD8"/>
-      <stop offset="100%" stop-color="#d8c8a8"/>
+    <!-- Husky body: cool grey with slight blue -->
+    <radialGradient id="hBody" cx="40%" cy="30%" r="70%">
+      <stop offset="0%"   stop-color="#c4d6e0"/>
+      <stop offset="55%"  stop-color="#9ab0bc"/>
+      <stop offset="100%" stop-color="#6a8090"/>
     </radialGradient>
-    <radialGradient id="bBelly" cx="50%" cy="50%" r="60%">
-      <stop offset="0%"   stop-color="#fffaf0"/>
-      <stop offset="100%" stop-color="#ead9b8"/>
+    <!-- Husky face mask / belly: warm white -->
+    <radialGradient id="hFace" cx="50%" cy="40%" r="60%">
+      <stop offset="0%"   stop-color="#f5f2ec"/>
+      <stop offset="100%" stop-color="#e4ddd4"/>
     </radialGradient>
-    <radialGradient id="bEar" cx="50%" cy="60%" r="60%">
-      <stop offset="0%"   stop-color="#e8a8b8"/>
-      <stop offset="100%" stop-color="#a62a52"/>
+    <!-- Husky inner ear: rose pink -->
+    <radialGradient id="hEar" cx="50%" cy="60%" r="60%">
+      <stop offset="0%"   stop-color="#f5b8cc"/>
+      <stop offset="100%" stop-color="#c07090"/>
     </radialGradient>
-    <radialGradient id="bCheek" cx="50%" cy="50%" r="50%">
-      <stop offset="0%"   stop-color="#e8a8b8" stop-opacity="0.9"/>
-      <stop offset="100%" stop-color="#e8a8b8" stop-opacity="0"/>
+    <!-- Husky cheek blush -->
+    <radialGradient id="hCheek" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#f0a8bc" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#f0a8bc" stop-opacity="0"/>
     </radialGradient>
   </defs>
 </svg>
@@ -619,15 +444,36 @@ function dayLabel(dk) {
   return WEEKDAYS[new Date(dk + 'T12:00:00').getDay()];
 }
 
+/* ─── Entry kinds ─── */
+const TD_KINDS = [
+  { id:'word',        label:'Word',        sub:'A new word or phrase',                  icon:'Aa', accent:'rose'  },
+  { id:'concept',     label:'Concept',     sub:'An abstract idea worth holding',         icon:'◇',  accent:'rose'  },
+  { id:'theory',      label:'Theory',      sub:'A framework or mental model',            icon:'Σ',  accent:'ember' },
+  { id:'quote',       label:'Quote',       sub:'Something someone said, verbatim',       icon:'"',  accent:'rose'  },
+  { id:'idea',        label:'Idea',        sub:'A thought of your own',                  icon:'★',  accent:'ember' },
+  { id:'observation', label:'Observation', sub:'Something you noticed',                  icon:'·',  accent:'rose'  },
+];
+
+function shortKindLabel(kind) {
+  return { word:'word', concept:'concept', theory:'theory', quote:'quote', idea:'idea', observation:'obs.' }[kind] || kind || 'entry';
+}
+
+function kindBadge(kind) {
+  const k = TD_KINDS.find(x => x.id === kind);
+  if (!k) return '';
+  const col = k.accent === 'ember' ? 'var(--ember)' : 'var(--rose)';
+  return `<span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:${col};border:1px solid ${col};border-radius:6px;padding:1px 6px;opacity:0.85;white-space:nowrap">${esc(k.label)}</span>`;
+}
+
 /* ─── Seeds ─── */
 const SEED_ENTRIES = [
-  { id:'s23', n:23, word:'petrichor',  pos:'n.', meaning:'The earthy smell after rain. First noticed on a porch in August.',                         dayKey:today()     },
-  { id:'s22', n:22, word:'sonder',     pos:'n.', meaning:'The realisation that every passerby lives a life as vivid and complex as your own.',        dayKey:daysAgo(1)  },
-  { id:'s21', n:21, word:'apricity',   pos:'n.', meaning:'The warmth of the sun in winter. Worth the wait.',                                          dayKey:daysAgo(2)  },
-  { id:'s20', n:20, word:'hiraeth',    pos:'n.', meaning:'A homesickness for a home you cannot return to, or that never was.',                        dayKey:daysAgo(3)  },
-  { id:'s19', n:19, word:'meander',    pos:'v.', meaning:'To wander without urgency. The opposite of doomscrolling.',                                  dayKey:daysAgo(4)  },
-  { id:'s18', n:18, word:'limerence',  pos:'n.', meaning:'That involuntary, almost embarrassing romantic obsession. Tennov, 1979.',                   dayKey:daysAgo(5)  },
-  { id:'s17', n:17, word:'kintsugi',   pos:'n.', meaning:'Mending broken pottery with gold. The crack becomes the point.',                            dayKey:daysAgo(6)  },
+  { id:'s23', n:23, kind:'word',        title:'petrichor',          body:'The earthy smell after rain. First noticed on a porch in August.',                                     source:null, word:'petrichor',          pos:'n.',      meaning:'The earthy smell after rain.',                                     dayKey:today()   },
+  { id:'s22', n:22, kind:'theory',      title:"Hanlon's razor",     body:'Never attribute to malice what is adequately explained by stupidity. Or, more charitably: by inattention.', source:null, word:"Hanlon's razor",    pos:'theory',  meaning:"Never attribute to malice what is adequately explained by stupidity.", dayKey:daysAgo(1) },
+  { id:'s21', n:21, kind:'concept',     title:'sunk cost',          body:'Money or effort already spent should not weigh on the next decision. The receipt is not an argument.',   source:null, word:'sunk cost',          pos:'concept', meaning:'Money already spent should not weigh on the next decision.',          dayKey:daysAgo(2) },
+  { id:'s20', n:20, kind:'quote',       title:'Speak the truth, but leave immediately after.', body:'The point of the line is the leaving, not the truth.', source:'— attrib. Slovenian proverb', word:'Speak the truth…', pos:'quote', meaning:'The point of the line is the leaving, not the truth.', dayKey:daysAgo(3) },
+  { id:'s19', n:19, kind:'word',        title:'hiraeth',            body:'A homesickness for a home you cannot return to, or that never was.',                                    source:null, word:'hiraeth',            pos:'n.',      meaning:'A homesickness for a home you cannot return to.',                    dayKey:daysAgo(4) },
+  { id:'s18', n:18, kind:'idea',        title:'rooms have memory',  body:'What if the rooms in a house keep small ledgers of the people who pass through? Not haunted — just bookkeeping.', source:null, word:'rooms have memory', pos:'idea', meaning:'What if rooms kept ledgers of everyone who passed through?',         dayKey:daysAgo(5) },
+  { id:'s17', n:17, kind:'concept',     title:'kintsugi',           body:'Mending broken pottery with gold. The crack becomes the point. A whole philosophy in a method.',        source:null, word:'kintsugi',           pos:'concept', meaning:'Mending with gold. The crack becomes the point.',                    dayKey:daysAgo(6) },
 ];
 
 const SEED_NODES = [
@@ -644,11 +490,11 @@ const SEED_NODES = [
 ];
 
 const PROMPTS = [
-  'A word you overheard this week.',
-  'A word your grandparent used.',
-  'A word for a feeling you have no name for.',
-  'A word that sounds like what it means.',
-  'A word from a book you are reading right now.',
+  'Something you overheard this week.',
+  'A theory you keep returning to.',
+  'A line from a book you are reading.',
+  'An idea you almost dismissed.',
+  'A word, concept, or thing — anything that caught.',
 ];
 
 function seedDays() {
@@ -666,35 +512,30 @@ let S = {
   days:    seedDays(),
   chapter: 1, section: 4, chapterTitle: 'The Quiet Hours',
   // transient (not persisted)
-  screen: 'path', addStep: 0, addWord: '', addPos: 'n.', addMeaning: '', lastEntry: null,
+  screen: 'path', addStep: 0, addKind: '', addTitle: '', addBody: '', addSource: '', lastEntry: null,
 };
 
 function loadState() {
   const saved = Store.get(null);
   if (!saved) return;
-  const { screen, addStep, addWord, addPos, addMeaning, lastEntry, ...rest } = saved;
+  const { screen, addStep, addKind, addTitle, addBody, addSource, lastEntry, ...rest } = saved;
   Object.assign(S, rest);
-  // Recompute date labels for entries (they shift daily)
-  S.entries = S.entries.map(e => ({ ...e, dateLabel: dayLabel(e.dayKey) }));
+  S.entries = S.entries.map(e => ({ ...e }));
 }
 
 function saveState() {
-  const { screen, addStep, addWord, addPos, addMeaning, lastEntry, ...persist } = S;
+  const { screen, addStep, addKind, addTitle, addBody, addSource, lastEntry, ...persist } = S;
   Store.set(persist);
 }
 
 /* ─── Streak math ─── */
 function currentStreak(days) {
-  days = days || S.days;
-  let n = 0;
-  for (let i = days.length - 1; i >= 0; i--) {
-    if (days[i].kept) n++; else break;
-  }
+  days = days || S.days; let n = 0;
+  for (let i = days.length - 1; i >= 0; i--) { if (days[i].kept) n++; else break; }
   return n;
 }
 function recomputeLongest(days) {
-  days = days || S.days;
-  let max = 0, cur = 0;
+  days = days || S.days; let max = 0, cur = 0;
   for (const d of days) { if (d.kept) { cur++; max = Math.max(max, cur); } else cur = 0; }
   return max;
 }
@@ -721,75 +562,138 @@ function flameSVG(size) {
   </svg>`;
 }
 
-function bunnySitSVG(size) {
+/* ─── Husky mascot — Sitting pose ─── */
+function huskySitSVG(size) {
   size = size || 100;
   const h = Math.round(size * 220 / 200);
   return `<svg viewBox="0 0 200 220" width="${size}" height="${h}" style="display:block">
-    <ellipse cx="100" cy="208" rx="55" ry="6" fill="#000" opacity="0.18"/>
-    <path d="M70 38Q58 8 68 4Q82 6 86 36Q86 56 78 70Q70 60 70 38Z" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <path d="M73 42Q66 22 72 14Q80 18 80 38Q80 52 76 62Q72 54 73 42Z" fill="url(#bEar)" opacity="0.85"/>
-    <path d="M130 38Q142 8 132 4Q118 6 114 36Q114 56 122 70Q130 60 130 38Z" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <path d="M127 42Q134 22 128 14Q120 18 120 38Q120 52 124 62Q128 54 127 42Z" fill="url(#bEar)" opacity="0.85"/>
-    <ellipse cx="100" cy="160" rx="60" ry="48" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.4"/>
-    <ellipse cx="100" cy="170" rx="38" ry="32" fill="url(#bBelly)"/>
-    <ellipse cx="72"  cy="200" rx="14" ry="9"  fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <ellipse cx="128" cy="200" rx="14" ry="9"  fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <circle  cx="68"  cy="200" r="2.4" fill="#a62a52" opacity="0.6"/>
-    <circle  cx="132" cy="200" r="2.4" fill="#a62a52" opacity="0.6"/>
-    <ellipse cx="86"  cy="178" rx="9"  ry="11" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <ellipse cx="114" cy="178" rx="9"  ry="11" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <ellipse cx="100" cy="100" rx="48" ry="44" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.4"/>
-    <ellipse cx="68"  cy="112" rx="12" ry="8"  fill="url(#bCheek)"/>
-    <ellipse cx="132" cy="112" rx="12" ry="8"  fill="url(#bCheek)"/>
-    <ellipse cx="88"  cy="98"  rx="4.2" ry="5.4" fill="#1a0b12"/>
-    <ellipse cx="112" cy="98"  rx="4.2" ry="5.4" fill="#1a0b12"/>
-    <circle  cx="89.5" cy="96" r="1.4" fill="#fff"/>
-    <circle  cx="113.5" cy="96" r="1.4" fill="#fff"/>
-    <path d="M97 110Q100 113 103 110Q102 115 100 116Q98 115 97 110Z" fill="#a62a52" stroke="#1a0b12" stroke-width="0.8"/>
-    <path d="M100 116q0 4-4 5M100 116q0 4 4 5" stroke="#1a0b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-    <g stroke="#1a0b12" stroke-width="0.8" opacity="0.55" stroke-linecap="round">
-      <line x1="60" y1="118" x2="80" y2="116"/><line x1="60" y1="124" x2="80" y2="120"/>
-      <line x1="140" y1="118" x2="120" y2="116"/><line x1="140" y1="124" x2="120" y2="120"/>
-    </g>
+    <!-- shadow -->
+    <ellipse cx="100" cy="215" rx="52" ry="7" fill="#000" opacity="0.18"/>
+    <!-- body -->
+    <ellipse cx="100" cy="170" rx="60" ry="50" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4"/>
+    <!-- chest belly -->
+    <ellipse cx="100" cy="180" rx="38" ry="36" fill="url(#hFace)"/>
+    <!-- left ear outer -->
+    <path d="M62,78 Q66,52 77,30 Q88,54 92,78 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4" stroke-linejoin="round"/>
+    <!-- left ear inner -->
+    <path d="M67,76 Q70,56 77,36 Q84,56 87,76 Z" fill="url(#hEar)" opacity="0.9"/>
+    <!-- right ear outer -->
+    <path d="M108,78 Q112,52 123,30 Q134,54 138,78 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4" stroke-linejoin="round"/>
+    <!-- right ear inner -->
+    <path d="M113,76 Q116,56 123,36 Q130,56 133,76 Z" fill="url(#hEar)" opacity="0.9"/>
+    <!-- head -->
+    <circle cx="100" cy="100" r="48" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4"/>
+    <!-- face mask white lower face -->
+    <ellipse cx="100" cy="114" rx="30" ry="26" fill="url(#hFace)"/>
+    <!-- front paws -->
+    <ellipse cx="68"  cy="195" rx="9"  ry="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2"/>
+    <ellipse cx="132" cy="195" rx="9"  ry="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2"/>
+    <!-- feet -->
+    <ellipse cx="76"  cy="210" rx="13" ry="8"  fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2"/>
+    <ellipse cx="124" cy="210" rx="13" ry="8"  fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2"/>
+    <!-- feet light patches -->
+    <ellipse cx="74"  cy="209" rx="4"  ry="2.5" fill="url(#hFace)" opacity="0.4"/>
+    <ellipse cx="122" cy="209" rx="4"  ry="2.5" fill="url(#hFace)" opacity="0.4"/>
+    <!-- cheek blush -->
+    <ellipse cx="72"  cy="118" rx="13" ry="9"  fill="url(#hCheek)"/>
+    <ellipse cx="128" cy="118" rx="13" ry="9"  fill="url(#hCheek)"/>
+    <!-- eyes -->
+    <ellipse cx="86"  cy="99"  rx="5.2" ry="6.2" fill="#1a2530"/>
+    <ellipse cx="114" cy="99"  rx="5.2" ry="6.2" fill="#1a2530"/>
+    <!-- eye iris (subtle blue) -->
+    <ellipse cx="86"  cy="100" rx="3.2" ry="4"   fill="#2a4060"/>
+    <ellipse cx="114" cy="100" rx="3.2" ry="4"   fill="#2a4060"/>
+    <!-- eye highlights -->
+    <circle cx="87.5" cy="97"  r="1.6" fill="#fff"/>
+    <circle cx="115.5" cy="97" r="1.6" fill="#fff"/>
+    <circle cx="89"   cy="101" r="0.8" fill="#fff" opacity="0.55"/>
+    <circle cx="117"  cy="101" r="0.8" fill="#fff" opacity="0.55"/>
+    <!-- nose -->
+    <ellipse cx="100" cy="116" rx="5.5" ry="3.8" fill="#1a2530"/>
+    <ellipse cx="98.5" cy="114.5" rx="1.8" ry="1.2" fill="#4a6878" opacity="0.5"/>
+    <!-- mouth -->
+    <path d="M94,122 Q100,128 106,122" stroke="#1a2530" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M100,122 L100,125" stroke="#1a2530" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <!-- tail curl on right -->
+    <path d="M156,172 Q178,148 168,126 Q160,112 150,126 Q145,142 158,154" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.3" stroke-linejoin="round"/>
+    <ellipse cx="160" cy="127" rx="8" ry="11" fill="url(#hFace)" transform="rotate(-20 160 127)" opacity="0.7"/>
   </svg>`;
 }
 
-function bunnyHopSVG(size) {
+/* ─── Husky mascot — Hop/jump pose (reveal screen) ─── */
+function huskyHopSVG(size) {
   size = size || 140;
   const h = Math.round(size * 220 / 200);
-  return `<svg viewBox="0 0 200 220" width="${size}" height="${h}" class="bunny-hop-anim" style="display:block;margin:0 auto">
-    <ellipse cx="100" cy="212" rx="40" ry="4" fill="#000" opacity="0.12"/>
-    <path d="M62 50Q40 22 50 14Q70 16 80 42Q84 60 78 76Q66 70 62 50Z" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <path d="M65 52Q50 30 56 22Q70 26 76 44Q80 58 76 70Q68 62 65 52Z" fill="url(#bEar)" opacity="0.85"/>
-    <path d="M138 50Q160 22 150 14Q130 16 120 42Q116 60 122 76Q134 70 138 50Z" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <path d="M135 52Q150 30 144 22Q130 26 124 44Q120 58 124 70Q132 62 135 52Z" fill="url(#bEar)" opacity="0.85"/>
-    <ellipse cx="100" cy="150" rx="58" ry="44" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.4"/>
-    <ellipse cx="100" cy="158" rx="36" ry="28" fill="url(#bBelly)"/>
-    <ellipse cx="60"  cy="188" rx="20" ry="10" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2" transform="rotate(-15 60 188)"/>
-    <ellipse cx="140" cy="188" rx="20" ry="10" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2" transform="rotate(15 140 188)"/>
-    <ellipse cx="78"  cy="170" rx="9"  ry="11" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <ellipse cx="122" cy="170" rx="9"  ry="11" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.2"/>
-    <ellipse cx="100" cy="92"  rx="48" ry="44" fill="url(#bBody)" stroke="#1a0b12" stroke-width="1.4"/>
-    <ellipse cx="68"  cy="104" rx="12" ry="8"  fill="url(#bCheek)"/>
-    <ellipse cx="132" cy="104" rx="12" ry="8"  fill="url(#bCheek)"/>
-    <path d="M82 88q6-6 12 0" stroke="#1a0b12" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-    <path d="M106 88q6-6 12 0" stroke="#1a0b12" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-    <path d="M97 102Q100 105 103 102Q102 107 100 108Q98 107 97 102Z" fill="#a62a52" stroke="#1a0b12" stroke-width="0.8"/>
-    <path d="M100 108q0 4-4 5M100 108q0 4 4 5" stroke="#1a0b12" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  return `<svg viewBox="0 0 200 220" width="${size}" height="${h}" class="husky-hop-anim" style="display:block;margin:0 auto">
+    <!-- shadow (small, husky is airborne) -->
+    <ellipse cx="100" cy="215" rx="36" ry="5" fill="#000" opacity="0.12"/>
+    <!-- body slightly tilted forward with energy -->
+    <ellipse cx="100" cy="160" rx="64" ry="46" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4"/>
+    <ellipse cx="100" cy="168" rx="40" ry="32" fill="url(#hFace)"/>
+    <!-- back legs stretched out -->
+    <ellipse cx="58"  cy="192" rx="20" ry="9"  fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2" transform="rotate(-25 58 192)"/>
+    <ellipse cx="142" cy="192" rx="20" ry="9"  fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2" transform="rotate(25 142 192)"/>
+    <!-- front paws reaching forward/up -->
+    <ellipse cx="72"  cy="172" rx="9"  ry="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2" transform="rotate(-20 72 172)"/>
+    <ellipse cx="128" cy="172" rx="9"  ry="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2" transform="rotate(20 128 172)"/>
+    <!-- left ear (perked up with excitement) -->
+    <path d="M54,78 Q60,50 70,28 Q80,52 84,78 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M59,76 Q63,54 70,34 Q77,54 79,76 Z" fill="url(#hEar)" opacity="0.9"/>
+    <!-- right ear -->
+    <path d="M116,78 Q120,50 130,28 Q140,52 146,78 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M121,76 Q123,54 130,34 Q137,54 141,76 Z" fill="url(#hEar)" opacity="0.9"/>
+    <!-- head -->
+    <circle cx="100" cy="88" r="48" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4"/>
+    <ellipse cx="100" cy="102" rx="30" ry="25" fill="url(#hFace)"/>
+    <!-- cheeks -->
+    <ellipse cx="72"  cy="106" rx="12" ry="8" fill="url(#hCheek)"/>
+    <ellipse cx="128" cy="106" rx="12" ry="8" fill="url(#hCheek)"/>
+    <!-- happy squinting eyes (arched upward — pure joy) -->
+    <path d="M79,89 Q86,81 93,89" stroke="#1a2530" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <path d="M107,89 Q114,81 121,89" stroke="#1a2530" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+    <!-- nose -->
+    <ellipse cx="100" cy="104" rx="5.5" ry="3.8" fill="#1a2530"/>
+    <ellipse cx="98.5" cy="102.5" rx="1.8" ry="1.2" fill="#4a6878" opacity="0.5"/>
+    <!-- open happy mouth -->
+    <path d="M88,112 Q100,124 112,112" stroke="#1a2530" stroke-width="1.8" stroke-linecap="round" fill="rgba(166,42,82,0.4)"/>
+    <!-- tongue -->
+    <ellipse cx="100" cy="118" rx="6" ry="4.5" fill="#e87090" opacity="0.9"/>
+    <path d="M94,112 Q100,122 106,112" stroke="none" fill="rgba(232,112,144,0.3)"/>
+    <!-- wagging tail -->
+    <path d="M158,162 Q182,134 168,112 Q158,98 148,114 Q143,132 158,146" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.3" stroke-linejoin="round"/>
+    <ellipse cx="160" cy="115" rx="8" ry="11" fill="url(#hFace)" transform="rotate(-20 160 115)" opacity="0.7"/>
   </svg>`;
 }
 
-function bunnyTinySVG(size) {
+/* ─── Husky mascot — Tiny (profile avatar) ─── */
+function huskyTinySVG(size) {
   size = size || 42;
   return `<svg viewBox="0 0 40 40" width="${size}" height="${size}" style="display:block">
-    <ellipse cx="14" cy="9" rx="3.2" ry="7" fill="#F2EAD8" stroke="#1a0b12" stroke-width="1"/>
-    <ellipse cx="26" cy="9" rx="3.2" ry="7" fill="#F2EAD8" stroke="#1a0b12" stroke-width="1"/>
-    <ellipse cx="14" cy="9" rx="1.4" ry="4.4" fill="#a62a52" opacity="0.7"/>
-    <ellipse cx="26" cy="9" rx="1.4" ry="4.4" fill="#a62a52" opacity="0.7"/>
-    <circle cx="20" cy="22" r="13" fill="#F2EAD8" stroke="#1a0b12" stroke-width="1.2"/>
-    <circle cx="16" cy="22" r="1.4" fill="#1a0b12"/>
-    <circle cx="24" cy="22" r="1.4" fill="#1a0b12"/>
-    <path d="M19 26Q20 27.5 21 26" stroke="#1a0b12" stroke-width="0.9" fill="#a62a52"/>
+    <!-- body hint -->
+    <ellipse cx="20" cy="34" rx="13" ry="7" fill="url(#hBody)"/>
+    <ellipse cx="20" cy="35" rx="8"  ry="5" fill="url(#hFace)"/>
+    <!-- left ear -->
+    <path d="M8,22 Q10,14 14,8 Q18,14 20,22 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="0.9" stroke-linejoin="round"/>
+    <path d="M10,21 Q12,15 14,10 Q16,15 18,21 Z" fill="url(#hEar)" opacity="0.9"/>
+    <!-- right ear -->
+    <path d="M20,22 Q22,14 26,8 Q30,14 32,22 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="0.9" stroke-linejoin="round"/>
+    <path d="M22,21 Q24,15 26,10 Q28,15 30,21 Z" fill="url(#hEar)" opacity="0.9"/>
+    <!-- head -->
+    <circle cx="20" cy="23" r="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1"/>
+    <!-- face mask -->
+    <ellipse cx="20" cy="27" rx="8.5" ry="7.5" fill="url(#hFace)"/>
+    <!-- eyes -->
+    <ellipse cx="15.5" cy="22" rx="2"   ry="2.4" fill="#1a2530"/>
+    <ellipse cx="24.5" cy="22" rx="2"   ry="2.4" fill="#1a2530"/>
+    <ellipse cx="15.5" cy="22.2" rx="1.2" ry="1.6" fill="#2a4060"/>
+    <ellipse cx="24.5" cy="22.2" rx="1.2" ry="1.6" fill="#2a4060"/>
+    <circle cx="16.2" cy="21" r="0.7" fill="#fff"/>
+    <circle cx="25.2" cy="21" r="0.7" fill="#fff"/>
+    <!-- nose -->
+    <ellipse cx="20" cy="28.5" rx="2.4" ry="1.6" fill="#1a2530"/>
+    <!-- mouth -->
+    <path d="M17,31.5 Q20,34 23,31.5" stroke="#1a2530" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+    <path d="M20,31.5 L20,33" stroke="#1a2530" stroke-width="0.8" fill="none" stroke-linecap="round"/>
   </svg>`;
 }
 
@@ -820,15 +724,15 @@ function topBar() {
 
 function bottomNav(active) {
   const items = [
-    { id:'path',    act:'go-path',       icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>` },
-    { id:'add',     act:'open-add',      icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>` },
-    { id:'profile', act:'open-profile',  icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>` },
+    { id:'path',    act:'go-path',      icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h12M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>` },
+    { id:'add',     act:'open-add',     icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>` },
+    { id:'profile', act:'open-profile', icon:`<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="3.5" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c1.5-3.5 4-5 7-5s5.5 1.5 7 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>` },
   ];
   return `<div class="bottom-nav">
     ${items.map(it => {
       const isAdd = it.id === 'add';
       const isActive = !isAdd && active === it.id;
-      const cls = isAdd ? 'nav-btn nav-btn-add' : `nav-btn${isActive ? ' nav-btn-active' : ''}`;
+      const cls = isAdd ? 'nav-btn nav-btn-add' : `nav-btn${isActive?' nav-btn-active':''}`;
       return `<button class="${cls}" data-action="${it.act}">${it.icon}</button>`;
     }).join('')}
   </div>`;
@@ -884,7 +788,7 @@ function renderPath() {
     const {x, y} = positions[i];
     const isCur = n.state === 'current';
     const isLocked = n.state === 'locked';
-    const tip = isCur ? `<div class="path-node-tip">Start</div>` : '';
+    const tip = isCur ? `<div class="path-node-tip">Drop one</div>` : '';
     nodeHtml += `
       <div class="path-node-wrap" style="left:${x}px;top:${y}px">
         ${tip}
@@ -901,10 +805,10 @@ function renderPath() {
       background:radial-gradient(circle,rgba(194,73,20,0.18) 0%,transparent 60%);
       pointer-events:none;filter:blur(8px)"></div>` : '';
 
-  const bunnyHtml = ci >= 0 ? (() => {
+  const huskyHtml = ci >= 0 ? (() => {
     const {x, y} = positions[ci];
     const bx = x > 170 ? x - 120 : x + 60;
-    return `<div style="position:absolute;left:${bx}px;top:${y-50}px;width:100px">${bunnySitSVG(100)}</div>`;
+    return `<div style="position:absolute;left:${bx}px;top:${y-50}px;width:100px">${huskySitSVG(100)}</div>`;
   })() : '';
 
   const dividerHtml = nodes.length > 5 ? `
@@ -930,64 +834,103 @@ function renderPath() {
     </div>
     <div class="path-scroll" id="path-scroll">
       <div class="path-canvas" style="height:${H}px">
-        ${glowHtml}${dots}${nodeHtml}${bunnyHtml}${dividerHtml}
+        ${glowHtml}${dots}${nodeHtml}${huskyHtml}${dividerHtml}
       </div>
     </div>
     ${bottomNav('path')}
   </div>`;
 }
 
-/* ─── Screen: Add word (3 steps) ─── */
+/* ─── Screen: Add (4 steps: kind → title → body → preview) ─── */
 function renderAdd() {
-  const {addStep:step, addWord:word, addPos:pos, addMeaning:meaning, streak, total} = S;
-  const canNext = step===0 ? word.trim().length>0 : step===1 ? true : true;
+  const { addStep:step, addKind:kind, addTitle:title, addBody:body, addSource:source, streak, total } = S;
   const prompt = PROMPTS[total % PROMPTS.length];
-  const POS = ['n.','v.','adj.','adv.','phr.'];
+  const kd = TD_KINDS.find(k => k.id === kind);
+  const canNext =
+    step === 0 ? kind !== '' :
+    step === 1 ? title.trim().length > 0 :
+    true;
 
-  let body = '';
+  /* Step 0: kind picker */
+  let stepBody = '';
   if (step === 0) {
-    body = `
-      ${lbl(`&#x2116;&nbsp;${String(total+1).padStart(3,'0')} &middot; today`,'lbl-rose')}
-      <h1 class="fraunces" style="font-size:30px;line-height:1.15;color:var(--cream);margin:8px 0 6px">
-        Add a word <em style="color:var(--ember);font-style:italic">to begin.</em>
-      </h1>
-      <p style="font-family:'Manrope',sans-serif;font-size:13px;line-height:1.5;color:var(--cream-faint);margin:4px 0 22px">
-        One a day. Any word that caught you. No essay required.
-      </p>
-      <div class="nudge-card">
-        ${lbl("Today's nudge",'lbl-rose')}
-        <div class="nudge-text">${esc(prompt)}</div>
+    stepBody = `
+      <div style="margin-bottom:20px">
+        ${lbl("What are you capturing?", 'lbl-rose')}
+        <h1 class="fraunces" style="font-size:28px;line-height:1.2;color:var(--cream);margin:8px 0 6px">
+          Anything that <em style="color:var(--ember);font-style:italic">caught.</em>
+        </h1>
+        <div class="nudge-card">
+          ${lbl("Today's prompt", 'lbl-rose')}
+          <div class="nudge-text">${esc(prompt)}</div>
+        </div>
+      </div>
+      <div class="kind-grid">
+        ${TD_KINDS.map(k => {
+          const col = k.accent === 'ember' ? 'var(--ember-hi)' : 'var(--rose)';
+          return `<button class="kind-card${kind===k.id?' kind-card-sel':''}" data-action="set-kind" data-kind="${k.id}">
+            <span class="kind-card-icon" style="color:${col}">${k.icon}</span>
+            <div class="kind-card-label">${k.label}</div>
+            <div class="kind-card-sub">${k.sub}</div>
+          </button>`;
+        }).join('')}
+      </div>`;
+
+  /* Step 1: title / name input */
+  } else if (step === 1) {
+    const labels = { word:'Word or phrase', concept:'Concept name', theory:'Theory name', quote:'The quote', idea:'Your idea', observation:'What you noticed' };
+    const placeholders = { word:'petrichor', concept:'sunk cost', theory:"Occam's razor", quote:'Speak the truth, but leave immediately after.', idea:'What if rooms had memory?', observation:'The sky was green for three seconds.' };
+    stepBody = `
+      <div style="margin-bottom:18px">
+        ${kindBadge(kind)}
+        <h1 class="fraunces" style="font-size:28px;line-height:1.2;color:var(--cream);margin:8px 0 6px">
+          Name it.
+        </h1>
       </div>
       <div class="add-field">
-        ${lbl('Word or phrase')}
-        <input id="word-input" data-action="sync-word" value="${esc(word)}" placeholder="petrichor"
+        ${lbl(labels[kind] || 'Title')}
+        <input id="title-input" data-action="sync-title" value="${esc(title)}"
+          placeholder="${esc(placeholders[kind] || '')}"
           autocomplete="off" autocapitalize="none" spellcheck="false"/>
-      </div>
-      <div class="pos-chips">
-        ${POS.map(p=>`<button class="pos-chip ${pos===p?'pos-chip-on':'pos-chip-off'}" data-action="set-pos" data-pos="${p}">${p}</button>`).join('')}
       </div>`;
-  } else if (step === 1) {
-    body = `
-      ${lbl('What does it mean to you?','lbl-rose')}
-      <h1 class="fraunces" style="font-size:28px;line-height:1.15;color:var(--cream);margin:8px 0 18px">
-        ${esc(word)}
-        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cream-faint);letter-spacing:0.08em">&middot; ${esc(pos)}</span>
-      </h1>
-      <textarea id="meaning-input" rows="6" placeholder="The earthy smell after rain. The first time I noticed it was on a porch in August.">${esc(meaning)}</textarea>
-      <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cream-faint);letter-spacing:0.1em;margin-top:10px;text-transform:uppercase">
+
+  /* Step 2: body / notes textarea */
+  } else if (step === 2) {
+    const bodyLabels = { word:'What it means to you', concept:'How you understand it', theory:'In your own words', quote:'Why it caught you', idea:'The full thought', observation:'What struck you about it' };
+    const bodyPhs = { word:'The earthy smell after rain. A thing I first noticed on a porch in August.', concept:'Money already spent shouldn\'t factor in. Move forward.', theory:'The simplest explanation is usually right.', quote:'The leaving matters more than the truth.', idea:'What if space itself has a kind of memory?', observation:'The way the afternoon light hit the window — orange and very still.' };
+    const showSource = kind === 'quote';
+    stepBody = `
+      <div style="margin-bottom:14px">
+        ${kindBadge(kind)}
+        <h1 class="fraunces" style="font-size:24px;line-height:1.15;color:var(--cream);margin:8px 0 0;max-height:72px;overflow:hidden">
+          ${kind === 'quote' ? '&#x201C;' : ''}${esc(title.length > 60 ? title.slice(0,60) + '…' : title)}${kind === 'quote' ? '&#x201D;' : ''}
+        </h1>
+      </div>
+      <textarea id="body-input" rows="5" placeholder="${esc(bodyPhs[kind] || '')}">${esc(body)}</textarea>
+      ${showSource ? `
+        <div style="margin-top:12px">
+          ${lbl('Source (optional)')}
+          <input id="source-input" value="${esc(source)}" placeholder="— Author, book, or context…"/>
+        </div>` : ''}
+      <p style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cream-faint);letter-spacing:0.1em;margin-top:12px;text-transform:uppercase">
         A fragment is fine. Skippable.
       </p>`;
+
+  /* Step 3: preview */
   } else {
-    body = `
+    const isQuote = kind === 'quote';
+    stepBody = `
       ${lbl('Preview','lbl-rose')}
       <div class="preview-card">
-        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px">
-          ${entryNo(total+1)} ${lbl('Today')}
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+          ${entryNo(total+1)} ${kindBadge(kind)} ${lbl('Today')}
         </div>
-        <div class="preview-word">${esc(word)}</div>
-        <div class="preview-pos">&middot; ${esc(pos)}</div>
+        <div class="preview-title" style="${isQuote ? 'font-style:italic;font-size:26px;' : ''}">
+          ${isQuote ? '&#x201C;' : ''}${esc(title)}${isQuote ? '&#x201D;' : ''}
+        </div>
+        ${isQuote && source ? `<div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cream-faint);letter-spacing:0.08em;margin-top:4px">${esc(source)}</div>` : ''}
         <div class="rule"></div>
-        <p class="preview-meaning">${meaning ? esc(meaning) : '<em style="opacity:0.5">No meaning written.</em>'}</p>
+        <p class="preview-meaning">${body ? esc(body) : `<em style="opacity:0.5">No notes written. The ${esc(shortKindLabel(kind))} alone is enough.</em>`}</p>
       </div>`;
   }
 
@@ -1000,17 +943,17 @@ function renderAdd() {
         </svg>
       </button>
       <div class="add-progress">
-        ${[0,1,2].map(i=>`<div class="prog-bar ${i<=step?'prog-on':'prog-off'}"></div>`).join('')}
+        ${[0,1,2,3].map(i=>`<div class="prog-bar ${i<=step?'prog-on':'prog-off'}"></div>`).join('')}
       </div>
       <div style="display:flex;align-items:center;gap:4px">
         ${flameSVG(18)}
         <span style="font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:var(--ember-hi)">${streak}</span>
       </div>
     </div>
-    <div class="add-body">${body}</div>
+    <div class="add-body">${stepBody}</div>
     <div class="add-footer">
-      <button class="add-btn ${canNext?'add-btn-on':'add-btn-off'}" data-action="add-next"${canNext?'':' disabled'}>
-        ${step === 2 ? 'Drop it' : 'Continue'}
+      <button id="add-next-btn" class="add-btn ${canNext?'add-btn-on':'add-btn-off'}" data-action="add-next"${canNext?'':' disabled'}>
+        ${step === 3 ? 'Drop it' : 'Continue'}
       </button>
     </div>
   </div>`;
@@ -1020,26 +963,31 @@ function renderAdd() {
 function renderReveal() {
   const e = S.lastEntry;
   if (!e) { S.screen = 'path'; return renderPath(); }
+  const isQuote = e.kind === 'quote';
   return `<div class="screen" style="position:relative;overflow:hidden">
     <div class="reveal-bloom"></div>
     <div class="sbar"></div>
     <div class="reveal-body">
-      ${bunnyHopSVG(140)}
+      ${huskyHopSVG(140)}
       <div style="margin-top:12px">${lbl(`Day&nbsp;${S.streak} &middot; entry&nbsp;&#x2116;&nbsp;${String(S.total).padStart(3,'0')}`,'lbl-rose')}</div>
       <h1 class="fraunces" style="font-size:22px;color:var(--cream);margin:16px 0 4px">
         Kept. <em style="color:var(--ember);font-style:italic">Onward.</em>
       </h1>
-      <p style="font-family:'Manrope',sans-serif;font-size:13px;color:var(--cream-faint);margin:0 0 0;max-width:280px">
-        You added <strong style="color:var(--cream-soft);font-weight:600">${esc(e.word)}</strong>. The streak holds.
+      <p style="font-family:'Manrope',sans-serif;font-size:13px;color:var(--cream-faint);margin:0;max-width:280px;display:flex;align-items:center;gap:6px;justify-content:center;flex-wrap:wrap">
+        You dropped ${kindBadge(e.kind)}
+        <strong style="color:var(--cream-soft);font-weight:600">${esc(e.title.length > 40 ? e.title.slice(0,40)+'…' : e.title)}</strong>.
       </p>
       <div class="reveal-card">
-        <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:4px">
-          ${entryNo(S.total)} ${lbl(esc(e.pos))}
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+          ${entryNo(S.total)} ${kindBadge(e.kind)}
         </div>
-        <div class="fraunces" style="font-size:32px;color:var(--cream);line-height:1.05">${esc(e.word)}</div>
+        <div class="fraunces" style="font-size:${isQuote?'22px':'30px'};color:var(--cream);line-height:1.1;${isQuote?'font-style:italic':''}">
+          ${isQuote?'&#x201C;':''}${esc(e.title)}${isQuote?'&#x201D;':''}
+        </div>
+        ${isQuote && e.source ? `<div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--cream-faint);letter-spacing:0.08em;margin-top:4px">${esc(e.source)}</div>` : ''}
         <div class="rule"></div>
         <p style="font-family:'Fraunces',serif;font-size:14px;line-height:1.5;color:var(--cream-soft);margin:0">
-          ${e.meaning ? esc(e.meaning) : '<em>No meaning. The word alone is enough.</em>'}
+          ${e.body ? esc(e.body) : `<em>No notes. The ${esc(shortKindLabel(e.kind))} alone is enough.</em>`}
         </p>
       </div>
       <div class="reveal-badge">
@@ -1066,12 +1014,12 @@ function renderProfile() {
   const cells = S.days.map((d, i) => {
     const isToday = i === S.days.length - 1;
     const bg     = d.kept ? (isToday ? 'var(--ember-hi)' : 'var(--wine)') : 'var(--surface-3)';
-    const border = d.kept ? (isToday ? 'var(--ember-hi)' : 'var(--rose)')  : 'var(--wine-deep)';
+    const border = d.kept ? (isToday ? 'var(--ember-hi)' : 'var(--rose)') : 'var(--wine-deep)';
     const shadow = isToday && d.kept ? '0 0 8px rgba(194,73,20,0.5)' : 'none';
     return `<div class="streak-cell" style="background:${bg};border:1px solid ${border};box-shadow:${shadow};opacity:${d.kept?1:0.6}" title="${d.date}"></div>`;
   }).join('');
 
-  const otd = { word:'querencia', pos:'n.', meaning:"A place where you feel at home, where you draw strength. A bullfighter's term, originally.", daysAgo:365 };
+  const otd = { kind:'concept', title:'querencia', body:"A place where you feel at home, where you draw strength. A bullfighter's term, originally.", daysAgo:365 };
 
   return `<div class="screen">
     <div class="sbar"></div>
@@ -1086,7 +1034,7 @@ function renderProfile() {
     </div>
     <div class="profile-body">
       <div class="profile-identity">
-        <div class="profile-avatar">${bunnyTinySVG(42)}</div>
+        <div class="profile-avatar">${huskyTinySVG(42)}</div>
         <div>
           <div class="profile-name">The Reader</div>
           ${lbl("Member since &middot; spring '26")}
@@ -1115,13 +1063,12 @@ function renderProfile() {
 
       <div class="on-this-day">
         <div class="otd-glow"></div>
-        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap">
           ${lbl(`On this day &middot; ${otd.daysAgo} days ago`,'lbl-rose')}
+          ${kindBadge(otd.kind)}
         </div>
-        <div class="otd-word">${esc(otd.word)}
-          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cream-faint);letter-spacing:0.1em">&middot; ${esc(otd.pos)}</span>
-        </div>
-        <p class="otd-meaning">${esc(otd.meaning)}</p>
+        <div class="otd-word">${esc(otd.title)}</div>
+        <p class="otd-meaning">${esc(otd.body)}</p>
       </div>
 
       <div class="recent-head">
@@ -1131,14 +1078,13 @@ function renderProfile() {
       <div>
         ${S.entries.slice(0,6).map(e => `
           <button class="entry-row">
-            <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:2px">
-              ${entryNo(e.n)} ${lbl(dayLabel(e.dayKey))}
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
+              ${entryNo(e.n)} ${lbl(dayLabel(e.dayKey))} ${kindBadge(e.kind || 'word')}
             </div>
-            <div style="display:flex;align-items:baseline;gap:8px">
-              <span class="entry-row-word">${esc(e.word)}</span>
-              <span class="entry-row-pos">&middot; ${esc(e.pos)}</span>
+            <div style="display:flex;align-items:baseline;gap:6px">
+              <span class="entry-row-title">${esc(e.title || e.word)}</span>
             </div>
-            ${e.meaning ? `<p class="entry-row-meaning">${esc(e.meaning)}</p>` : ''}
+            ${(e.body || e.meaning) ? `<p class="entry-row-meaning">${esc(e.body || e.meaning)}</p>` : ''}
           </button>`).join('')}
       </div>
     </div>
@@ -1155,14 +1101,13 @@ function renderApp() {
     case 'reveal':  app.innerHTML = renderReveal();  break;
     case 'profile': app.innerHTML = renderProfile(); break;
   }
-  // Focus input on add screen
   if (S.screen === 'add') {
     requestAnimationFrame(() => {
-      const el = document.getElementById(S.addStep === 0 ? 'word-input' : 'meaning-input');
+      const ids = { 1:'title-input', 2:'body-input' };
+      const el = document.getElementById(ids[S.addStep] || null);
       el && el.focus();
     });
   }
-  // Scroll path to current node
   if (S.screen === 'path') {
     requestAnimationFrame(() => {
       const ci = S.nodes.findIndex(n => n.state === 'current');
@@ -1177,21 +1122,30 @@ function renderApp() {
 /* ─── Sync transient input state to S before re-render ─── */
 function syncInputs() {
   if (S.screen !== 'add') return;
-  const w = document.getElementById('word-input');
-  const m = document.getElementById('meaning-input');
-  if (w) S.addWord = w.value;
-  if (m) S.addMeaning = m.value;
+  const t = document.getElementById('title-input');
+  const b = document.getElementById('body-input');
+  const s = document.getElementById('source-input');
+  if (t) S.addTitle  = t.value;
+  if (b) S.addBody   = b.value;
+  if (s) S.addSource = s.value;
 }
 
 /* ─── Commit a new entry ─── */
 function commitEntry() {
-  const word    = S.addWord.trim();
-  const pos     = S.addPos;
-  const meaning = S.addMeaning.trim();
-  const n       = S.total + 1;
-  const dk      = today();
+  const kind  = S.addKind || 'word';
+  const title = S.addTitle.trim();
+  const body  = S.addBody.trim();
+  const src   = S.addSource.trim();
+  const n     = S.total + 1;
+  const dk    = today();
 
-  const newEntry = { id:`e${n}-${Date.now()}`, n, word, pos, meaning, dayKey: dk, dateAdded: new Date().toISOString() };
+  const newEntry = {
+    id: `e${n}-${Date.now()}`, n, kind, title, body,
+    source: src || null,
+    // legacy compat
+    word: title, pos: shortKindLabel(kind), meaning: body,
+    dayKey: dk, dateAdded: new Date().toISOString(),
+  };
 
   const updatedEntries = [newEntry, ...S.entries];
 
@@ -1226,39 +1180,35 @@ app.addEventListener('click', e => {
   if (!btn) return;
   const action = btn.dataset.action;
   if (!action) return;
-
   syncInputs();
 
   switch (action) {
     case 'go-path':
-      S.screen = 'path'; S.addStep = 0; S.addWord = ''; S.addMeaning = ''; S.addPos = 'n.';
-      renderApp();
-      break;
+      S.screen = 'path'; S.addStep = 0; S.addKind = ''; S.addTitle = ''; S.addBody = ''; S.addSource = '';
+      renderApp(); break;
     case 'open-add':
-      S.screen = 'add'; S.addStep = 0; S.addWord = ''; S.addMeaning = ''; S.addPos = 'n.';
-      renderApp();
-      break;
+      S.screen = 'add'; S.addStep = 0; S.addKind = ''; S.addTitle = ''; S.addBody = ''; S.addSource = '';
+      renderApp(); break;
     case 'open-profile':
-      S.screen = 'profile';
-      renderApp();
-      break;
-    case 'set-pos':
-      S.addPos = btn.dataset.pos;
-      renderApp();
-      break;
+      S.screen = 'profile'; renderApp(); break;
+    case 'set-kind':
+      S.addKind = btn.dataset.kind; renderApp(); break;
     case 'add-next': {
       const step = S.addStep;
       if (step === 0) {
-        const w = document.getElementById('word-input');
-        const val = (w ? w.value : S.addWord).trim();
-        if (!val) return;
-        S.addWord = val; S.addStep = 1;
-        renderApp();
+        if (!S.addKind) return;
+        S.addStep = 1; renderApp();
       } else if (step === 1) {
-        const m = document.getElementById('meaning-input');
-        S.addMeaning = m ? m.value.trim() : S.addMeaning;
-        S.addStep = 2;
-        renderApp();
+        const t = document.getElementById('title-input');
+        const val = (t ? t.value : S.addTitle).trim();
+        if (!val) return;
+        S.addTitle = val; S.addStep = 2; renderApp();
+      } else if (step === 2) {
+        const b = document.getElementById('body-input');
+        const s = document.getElementById('source-input');
+        S.addBody   = b ? b.value : S.addBody;
+        S.addSource = s ? s.value : S.addSource;
+        S.addStep = 3; renderApp();
       } else {
         commitEntry();
       }
@@ -1267,12 +1217,23 @@ app.addEventListener('click', e => {
   }
 });
 
+/* ─── Live input → enable/disable Continue button ─── */
+app.addEventListener('input', e => {
+  if (S.screen !== 'add') return;
+  const btn = document.getElementById('add-next-btn');
+  if (!btn) return;
+  if (S.addStep === 1 && e.target.id === 'title-input') {
+    const can = e.target.value.trim().length > 0;
+    btn.disabled = !can;
+    btn.className = 'add-btn ' + (can ? 'add-btn-on' : 'add-btn-off');
+  }
+});
+
 app.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && S.screen === 'add' && S.addStep === 0) {
-    const input = document.getElementById('word-input');
+  if (e.key === 'Enter' && S.screen === 'add' && S.addStep === 1) {
+    const input = document.getElementById('title-input');
     if (document.activeElement === input && input.value.trim()) {
-      S.addWord = input.value.trim(); S.addStep = 1;
-      renderApp();
+      S.addTitle = input.value.trim(); S.addStep = 2; renderApp();
     }
   }
 });
