@@ -36,10 +36,6 @@ A streak is counted as consecutive days with at least one entry.
 
 Open `index.html` in a browser. That's it.
 
-## Deploying
-
-Push to `main`. GitHub Pages serves it from the repo root.
-
-Settings: Repository → Settings → Pages → Source: Deploy from branch `main`, folder `/`.
+## Deployed
 
 Live at: `https://bhagyashree-vaidya.github.io/ThinkDrop/`
