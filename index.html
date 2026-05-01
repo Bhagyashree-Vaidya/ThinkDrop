@@ -383,27 +383,6 @@
       <stop offset="35%"  stop-color="#E8742E"/>
       <stop offset="100%" stop-color="#C24914"/>
     </radialGradient>
-    <!-- Husky body: cool grey with slight blue -->
-    <radialGradient id="hBody" cx="40%" cy="30%" r="70%">
-      <stop offset="0%"   stop-color="#c4d6e0"/>
-      <stop offset="55%"  stop-color="#9ab0bc"/>
-      <stop offset="100%" stop-color="#6a8090"/>
-    </radialGradient>
-    <!-- Husky face mask / belly: warm white -->
-    <radialGradient id="hFace" cx="50%" cy="40%" r="60%">
-      <stop offset="0%"   stop-color="#f5f2ec"/>
-      <stop offset="100%" stop-color="#e4ddd4"/>
-    </radialGradient>
-    <!-- Husky inner ear: rose pink -->
-    <radialGradient id="hEar" cx="50%" cy="60%" r="60%">
-      <stop offset="0%"   stop-color="#f5b8cc"/>
-      <stop offset="100%" stop-color="#c07090"/>
-    </radialGradient>
-    <!-- Husky cheek blush -->
-    <radialGradient id="hCheek" cx="50%" cy="50%" r="50%">
-      <stop offset="0%"   stop-color="#f0a8bc" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#f0a8bc" stop-opacity="0"/>
-    </radialGradient>
   </defs>
 </svg>
 
@@ -565,143 +544,19 @@ function flameSVG(size) {
 /* ─── Husky mascot — Sitting pose ─── */
 function huskySitSVG(size) {
   size = size || 100;
-  const h = Math.round(size * 220 / 200);
-  return `<svg viewBox="0 0 200 220" width="${size}" height="${h}" style="display:block">
-    <!-- shadow -->
-    <ellipse cx="100" cy="215" rx="50" ry="7" fill="#000" opacity="0.18"/>
-    <!-- body -->
-    <ellipse cx="100" cy="170" rx="58" ry="52" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4"/>
-    <!-- chest/belly (white) -->
-    <ellipse cx="100" cy="183" rx="36" ry="37" fill="url(#hFace)"/>
-    <!-- left ear — tall sharp triangle, distinctly dog -->
-    <path d="M57,80 L72,22 L96,80 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M63,78 L72,30 L90,78 Z" fill="url(#hEar)" opacity="0.9"/>
-    <!-- right ear -->
-    <path d="M104,80 L128,22 L143,80 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M110,78 L128,30 L137,78 Z" fill="url(#hEar)" opacity="0.9"/>
-    <!-- head (grey) -->
-    <circle cx="100" cy="96" r="46" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4"/>
-    <!-- husky eye-patch markings (characteristic dark rings) -->
-    <ellipse cx="83" cy="90" rx="15" ry="13" fill="#1a2530" opacity="0.18"/>
-    <ellipse cx="117" cy="90" rx="15" ry="13" fill="#1a2530" opacity="0.18"/>
-    <!-- muzzle box — the key dog feature, rounded-rect snout -->
-    <rect x="72" y="104" width="56" height="32" rx="18" ry="18" fill="url(#hFace)" stroke="#1a2530" stroke-width="0.9"/>
-    <!-- dog nose (wide, triangular — not a dot) -->
-    <path d="M87,111 Q100,106 113,111 L113,121 Q100,124 87,121 Z" fill="#1a2530"/>
-    <circle cx="91" cy="115" r="2.8" fill="#3a5868" opacity="0.45"/>
-    <circle cx="109" cy="115" r="2.8" fill="#3a5868" opacity="0.45"/>
-    <ellipse cx="100" cy="110" rx="3.5" ry="1.5" fill="#5a8090" opacity="0.35"/>
-    <!-- cheek blush -->
-    <ellipse cx="70" cy="122" rx="12" ry="9" fill="url(#hCheek)"/>
-    <ellipse cx="130" cy="122" rx="12" ry="9" fill="url(#hCheek)"/>
-    <!-- eyes — ice blue, husky signature -->
-    <ellipse cx="83" cy="90" rx="5.5" ry="6.5" fill="#0d1a24"/>
-    <ellipse cx="117" cy="90" rx="5.5" ry="6.5" fill="#0d1a24"/>
-    <ellipse cx="83" cy="91" rx="3.5" ry="4.5" fill="#3a8ec8"/>
-    <ellipse cx="117" cy="91" rx="3.5" ry="4.5" fill="#3a8ec8"/>
-    <circle cx="84.5" cy="88" r="1.8" fill="#fff"/>
-    <circle cx="118.5" cy="88" r="1.8" fill="#fff"/>
-    <circle cx="86"   cy="92" r="0.9" fill="#fff" opacity="0.5"/>
-    <circle cx="120"  cy="92" r="0.9" fill="#fff" opacity="0.5"/>
-    <!-- mouth below muzzle -->
-    <path d="M90,128 Q100,135 110,128" stroke="#1a2530" stroke-width="1.6" fill="none" stroke-linecap="round"/>
-    <path d="M100,128 L100,131" stroke="#1a2530" stroke-width="1.2" fill="none" stroke-linecap="round"/>
-    <!-- front paws -->
-    <ellipse cx="68"  cy="194" rx="9"  ry="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2"/>
-    <ellipse cx="132" cy="194" rx="9"  ry="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2"/>
-    <path d="M63,201 Q68,205 73,201" stroke="#1a2530" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-    <path d="M127,201 Q132,205 137,201" stroke="#1a2530" stroke-width="0.8" fill="none" stroke-linecap="round"/>
-    <!-- feet -->
-    <ellipse cx="76"  cy="210" rx="13" ry="8" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2"/>
-    <ellipse cx="124" cy="210" rx="13" ry="8" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2"/>
-    <!-- tail — husky's curled fluffy tail -->
-    <path d="M150,172 Q180,144 164,116 Q152,98 140,116 Q134,138 152,154" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.5" stroke-linejoin="round" fill-rule="nonzero"/>
-    <path d="M145,124 Q153,106 163,115 Q167,126 158,133 Z" fill="url(#hFace)" opacity="0.6"/>
-  </svg>`;
+  return `<img src="mascot.svg" width="${size}" height="${size}" style="display:block" alt=""/>`;
 }
 
 /* ─── Husky mascot — Hop/jump pose (reveal screen) ─── */
 function huskyHopSVG(size) {
   size = size || 140;
-  const h = Math.round(size * 220 / 200);
-  return `<svg viewBox="0 0 200 220" width="${size}" height="${h}" class="husky-hop-anim" style="display:block;margin:0 auto">
-    <!-- shadow small — airborne -->
-    <ellipse cx="100" cy="215" rx="34" ry="5" fill="#000" opacity="0.12"/>
-    <!-- body -->
-    <ellipse cx="100" cy="160" rx="62" ry="46" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4"/>
-    <ellipse cx="100" cy="170" rx="38" ry="32" fill="url(#hFace)"/>
-    <!-- back legs splayed -->
-    <ellipse cx="56"  cy="192" rx="20" ry="9" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2" transform="rotate(-28 56 192)"/>
-    <ellipse cx="144" cy="192" rx="20" ry="9" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2" transform="rotate(28 144 192)"/>
-    <!-- front paws up -->
-    <ellipse cx="70"  cy="170" rx="9"  ry="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2" transform="rotate(-18 70 170)"/>
-    <ellipse cx="130" cy="170" rx="9"  ry="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.2" transform="rotate(18 130 170)"/>
-    <!-- left ear — sharp triangle -->
-    <path d="M52,78 L68,22 L86,78 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M58,76 L68,30 L82,76 Z" fill="url(#hEar)" opacity="0.9"/>
-    <!-- right ear -->
-    <path d="M114,78 L132,22 L148,78 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.5" stroke-linejoin="round"/>
-    <path d="M118,76 L132,30 L144,76 Z" fill="url(#hEar)" opacity="0.9"/>
-    <!-- head -->
-    <circle cx="100" cy="86" r="46" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4"/>
-    <!-- eye patches -->
-    <ellipse cx="83" cy="80" rx="15" ry="13" fill="#1a2530" opacity="0.18"/>
-    <ellipse cx="117" cy="80" rx="15" ry="13" fill="#1a2530" opacity="0.18"/>
-    <!-- muzzle box -->
-    <rect x="72" y="94" width="56" height="32" rx="18" ry="18" fill="url(#hFace)" stroke="#1a2530" stroke-width="0.9"/>
-    <!-- dog nose -->
-    <path d="M87,101 Q100,96 113,101 L113,111 Q100,114 87,111 Z" fill="#1a2530"/>
-    <circle cx="91" cy="105" r="2.4" fill="#3a5868" opacity="0.45"/>
-    <circle cx="109" cy="105" r="2.4" fill="#3a5868" opacity="0.45"/>
-    <!-- cheeks -->
-    <ellipse cx="70" cy="112" rx="12" ry="8" fill="url(#hCheek)"/>
-    <ellipse cx="130" cy="112" rx="12" ry="8" fill="url(#hCheek)"/>
-    <!-- happy squinting eyes -->
-    <path d="M77,81 Q83,73 90,81" stroke="#0d1a24" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M110,81 Q117,73 124,81" stroke="#0d1a24" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <!-- open mouth + tongue -->
-    <path d="M86,118 Q100,130 114,118" stroke="#1a2530" stroke-width="1.8" stroke-linecap="round" fill="rgba(140,30,60,0.3)"/>
-    <ellipse cx="100" cy="124" rx="7" ry="5" fill="#e87090" opacity="0.92"/>
-    <!-- wagging tail -->
-    <path d="M156,162 Q184,132 168,108 Q156,92 144,108 Q138,130 156,148" fill="url(#hBody)" stroke="#1a2530" stroke-width="1.4" stroke-linejoin="round"/>
-    <path d="M148,118 Q157,100 167,110 Q170,122 160,128 Z" fill="url(#hFace)" opacity="0.6"/>
-  </svg>`;
+  return `<img src="mascot.svg" width="${size}" height="${size}" class="husky-hop-anim" style="display:block;margin:0 auto" alt=""/>`;
 }
 
 /* ─── Husky mascot — Tiny (profile avatar) ─── */
 function huskyTinySVG(size) {
   size = size || 42;
-  return `<svg viewBox="0 0 40 40" width="${size}" height="${size}" style="display:block">
-    <!-- body -->
-    <ellipse cx="20" cy="34" rx="12" ry="7" fill="url(#hBody)"/>
-    <ellipse cx="20" cy="35" rx="7" ry="5" fill="url(#hFace)"/>
-    <!-- left ear — sharp triangle -->
-    <path d="M8,22 L13,7 L20,22 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="0.9" stroke-linejoin="round"/>
-    <path d="M10,21 L13,10 L18,21 Z" fill="url(#hEar)" opacity="0.9"/>
-    <!-- right ear -->
-    <path d="M20,22 L27,7 L32,22 Z" fill="url(#hBody)" stroke="#1a2530" stroke-width="0.9" stroke-linejoin="round"/>
-    <path d="M22,21 L27,10 L30,21 Z" fill="url(#hEar)" opacity="0.9"/>
-    <!-- head -->
-    <circle cx="20" cy="22" r="13" fill="url(#hBody)" stroke="#1a2530" stroke-width="1"/>
-    <!-- eye patches -->
-    <ellipse cx="15" cy="20" rx="5.5" ry="5" fill="#1a2530" opacity="0.16"/>
-    <ellipse cx="25" cy="20" rx="5.5" ry="5" fill="#1a2530" opacity="0.16"/>
-    <!-- muzzle box -->
-    <rect x="12" y="24" width="16" height="10" rx="5" ry="5" fill="url(#hFace)" stroke="#1a2530" stroke-width="0.7"/>
-    <!-- dog nose (wide) -->
-    <path d="M15.5,26 Q20,24.5 24.5,26 L24.5,30 Q20,31.5 15.5,30 Z" fill="#1a2530"/>
-    <circle cx="17" cy="28" r="1.1" fill="#3a5868" opacity="0.45"/>
-    <circle cx="23" cy="28" r="1.1" fill="#3a5868" opacity="0.45"/>
-    <!-- eyes — ice blue -->
-    <ellipse cx="15" cy="20" rx="2.2" ry="2.5" fill="#0d1a24"/>
-    <ellipse cx="25" cy="20" rx="2.2" ry="2.5" fill="#0d1a24"/>
-    <ellipse cx="15" cy="20.5" rx="1.3" ry="1.7" fill="#3a8ec8"/>
-    <ellipse cx="25" cy="20.5" rx="1.3" ry="1.7" fill="#3a8ec8"/>
-    <circle cx="15.8" cy="19.2" r="0.75" fill="#fff"/>
-    <circle cx="25.8" cy="19.2" r="0.75" fill="#fff"/>
-    <!-- mouth -->
-    <path d="M16,33 Q20,36 24,33" stroke="#1a2530" stroke-width="0.9" fill="none" stroke-linecap="round"/>
-  </svg>`;
+  return `<img src="mascot.svg" width="${size}" height="${size}" style="display:block" alt=""/>`;
 }
 
 /* ─── Shared component strings ─── */
